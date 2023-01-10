@@ -99,4 +99,24 @@ public class Dao {
 		return 0;
 		
 	}
+	
+	public String memberSignInCheck(MemberInfo mi) {
+		String sql = "SELECT PASSWORD FROM MEMBER_INFO WHERE USER_ID = ?";
+		String userPassword = null;
+		try {
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			psmt.setString(1, mi.getUserId());
+			ResultSet rs = psmt.executeQuery();
+			if(rs.next()) {
+				userPassword = rs.getString(1);
+			}
+			psmt.close();
+			return userPassword;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
 }
