@@ -100,8 +100,6 @@ public class Dao {
 		
 	}
 	
-	
-	
 	public String memberSignInCheck(MemberInfo mi) {
 		String sql = "SELECT PASSWORD FROM MEMBER_INFO WHERE USER_ID = ?";
 		String userPassword = null;

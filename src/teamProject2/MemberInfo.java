@@ -5,6 +5,12 @@ private String userId;
 private String password;
 private String name;
 
+public MemberInfo(String userId, String password) {
+	super();
+	this.userId = userId;
+	this.password = password;
+}
+
 public MemberInfo(String userId, String password, String name) {
 	super();
 	this.userId = userId;
