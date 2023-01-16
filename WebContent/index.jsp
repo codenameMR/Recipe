@@ -1,3 +1,4 @@
+<%@page import="com.cook.model.Recipe"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" session="false"%>
 <%
@@ -5,7 +6,13 @@ int delResult = 0;
 if (request.getAttribute("delResult") != null) {
 	delResult = (Integer)request.getAttribute("delResult");
 }
- %>
+
+int insertResult = 0;
+if (request.getAttribute("insertResult") != null) {
+insertResult = (Integer)request.getAttribute("insertResult");
+}
+//Recipe recipe = (Recipe)request.getAttribute("recipe");
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -213,4 +220,24 @@ if (request.getAttribute("delResult") != null) {
 			});
 		</script>	
 	<% } %>
+		<!-- 레시피 게시글 등록  -->
+	<% if (request.getAttribute("insertResult")!=null && insertResult == 0){ %>
+		<script>	
+			alert("레시피 게시글 등록 실패");
+		</script>	
+	<% } else if (request.getAttribute("insertResult")!=null && insertResult > 0){ %>
+		<script>
+			alert("레시피 게시글 등록 성공");
+			$.ajax({
+				url : 'recipelist.do',
+				type : 'get',
+				success : function(data) {
+					console.log(data);
+					$('#center_right').html(data);
+				}
+			});
+		</script>	
+	<% } %>
+	
+	
 </html>

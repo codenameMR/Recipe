@@ -68,7 +68,7 @@ public class WriteCommand implements Command {
 		if (category !="") 
 		result = RecipeDAO.getInstance().insertRecipeBoard(newRecipe);
 	
-		request.setAttribute("result", result);
+		request.setAttribute("insertResult", result);
 		request.setAttribute("recipe", newRecipe);	 //auto-generated key(rec_num)을 얻기위해서 
 	}
 

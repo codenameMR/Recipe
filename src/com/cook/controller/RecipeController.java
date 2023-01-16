@@ -62,7 +62,7 @@ public class RecipeController extends HttpServlet {
 		case "/recipeWriteOk.do":
 			command =  new WriteCommand();
 			command.execute(request, response);
-			viewPage = "/recipe_board/recipe_write.jsp";
+			viewPage = "/index.jsp";
 			break;
 		case "/recipeUpdate.do":
 			command = new SelectCommand();

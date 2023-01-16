@@ -16,8 +16,8 @@ public class SearchCommand implements Command{
 		
 		String search_class = request.getParameter("search_class");
 		String search_word = request.getParameter("search_word");
-		System.out.println(search_class);
-		System.out.println(search_word);
+//		System.out.println(search_class);
+//		System.out.println(search_word);
 		
 		List<Recipe> searchedLst = RecipeDAO.getInstance().SearchRecipe(search_word, search_class);
 		

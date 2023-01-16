@@ -53,9 +53,8 @@ String ctx = request.getContextPath();    //콘텍스트명 얻어오기.
 	<div class="wrap">
 		<h1>레시피 글쓰기</h1>
 		<form action="recipeWriteOk.do" method="post" enctype="multipart/form-data">
-			 <!-- memberID 파라미터 전달 용 숨은 input태그 -->
-			<!-- <input type="hidden" name="boardID" value="${sessionScope.memberID}"> -->
-                <!-- 제목 -->
+			<!-- memberID 파라미터 전달 용 숨은 input태그 -->
+			<input type="hidden" name="user_id" value="${sessionScope.memberID}">
 			<dl>
 				<dt>제목</dt>
 				<dd>
@@ -63,6 +62,7 @@ String ctx = request.getContextPath();    //콘텍스트명 얻어오기.
 						required>
 				</dd>
 			</dl>
+			
 			<dl>
 				<dt>글쓴이(id)</dt>
 				<dd>

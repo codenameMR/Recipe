@@ -370,6 +370,6 @@ public class RecipeDAO {
 //		System.out.println("입력완료");
 //	}
 	
-	//레시피 게시글 검색
+	
 	
 }
