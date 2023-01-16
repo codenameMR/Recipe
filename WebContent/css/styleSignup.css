@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Nanum Myeongjo', serif;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background: #325cb2;
+}
+
+.wrap {
+    width: 600px;
+    min-height: 100%;
+    margin: 0 auto;
+    padding: 50px;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+.wrap h1 {
+    padding-bottom: 12px;
+    border-bottom: 3px solid #000;
+    font-size: 32px;
+    letter-spacing: -2px;
+}
+
+.wrap form {
+    margin-top: 30px;
+}
+
+.wrap dl {
+    margin-top: 20px;
+    font-size: 0;
+}
+
+.wrap dl:first-child {
+    margin-top: 0;
+}
+
+.wrap dt,
+.wrap dd {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+.wrap dt {
+    width: 25%;
+}
+
+.wrap dd {
+    width: 75%;
+}
+
+.wrap input[type="text"],
+.wrap input[type="password"],
+.wrap input[type="tel"],
+.wrap input[type="email"],
+.wrap select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+}
+
+.wrap input[type="button"] {
+    padding: 6px 10px;
+    border: 0;
+    border-radius: 2px;
+    background: #325cb2;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+}
+
+.wrap textarea {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+.wrap input[type="submit"] {
+    display: block;
+    margin: 30px auto 0 auto;
+    padding: 16px 50px;
+    border: 0;
+    border-radius: 100px;
+    background: #325cb2;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+}
+
+.wrap input[type="radio"] {
+    display: none;
+}
+
+.wrap input[type="radio"] + label {
+    margin-left: 20px;
+    padding-left: 20px;
+    background: url(../img/radio_off.png) no-repeat 0 0;
+}
+
+.wrap dd label:nth-of-type(1) {
+    margin-left: 0;
+}
+
+.wrap input[type="radio"]:checked + label {
+    background-image: url(../img/radio_on.png);
+}
+
+.wrap input[type="checkbox"] {
+    display: none;
+}
+
+.wrap input[type="checkbox"] + label {
+    margin-left: 20px;
+    padding-left: 20px;
+    background: url(../img/chk_off.png) no-repeat 0 0;
+}
+
+.wrap input[type="checkbox"]:checked + label {
+    background-image: url(../img/chk_on.png);
+}
+
+.wrap dd label:nth-of-type(1) {
+    margin-left: 0;
+}
