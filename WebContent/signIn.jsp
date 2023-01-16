@@ -9,21 +9,23 @@
 </head>
 <body>
 	<%
+		request.setCharacterEncoding("UTF-8"); 
 		Dao dao = Dao.getInstance();
 		String userId = request.getParameter("userId");
 		String password = request.getParameter("password");
 		MemberInfo mi = new MemberInfo(userId, password);
 
 		if (dao.memberSignInCheck(mi).equals(password)) {
+			session.setAttribute("userId", userId);
 	%><script>
 		alert("로그인 성공");
-		window.location.href="signUpNInForm.jsp";
 	</script>
 	<%
+	response.sendRedirect("index.jsp");
 		} else {
 	%>
 	<script>
-		alert("로그인 실패");
+		alert("아이디 혹은 비밀번호가 다릅니다.");
 		window.location.href="signUpNInForm.jsp";
 	</script>
 	<%

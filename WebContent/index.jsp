@@ -6,15 +6,14 @@
 // 		contentPage = "firstView.jsp";
  %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-
-  <title>Shop Homepage - Start Bootstrap Template</title>
-
+  <title>레시피공유-레공</title>
+	
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom styles for this template -->
@@ -41,8 +40,8 @@
             <a href="#" class="list-group-item">게시판5</a>
         </div>
       </div> <!-- /.col-lg-3 왼쪽(게시판) 끝-->
-
-      <div class="col-lg-9" id ="center_right"> <!-- 오른쪽 (내용) -->
+<div class="background">
+ 
 	  </div> <!-- /.col-lg-9 오른쪽(내용) 끝--> 	
       
      </div> <!-- /.row 왼쪽,오른쪽 정렬 끝--> 
@@ -149,7 +148,10 @@
 				}
 			});
 		})
+		
  		
+	      
+		
  	</script>
 
 	

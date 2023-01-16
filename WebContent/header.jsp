@@ -10,22 +10,7 @@
   <!-- Custom styles for this template -->
   <link href="css/shop-homepage.css" rel="stylesheet">
 </head>
-	<script type="text/javascript">
-// 		function changeView(value){
-// 			if(value == "1") // 로그인 버튼 클릭시 로그인 화면으로 이동
-// 			{
-// 				location.href="MainForm.jsp?contentPage=member/view/LoginForm.jsp";
-// 			}
-// 			else if(value == "2") // 회원가입 버튼 클릭시 회원가입 화면으로 이동
-// 			{
-// 				location.href="MainForm.jsp?contentPage=member/view/JoinForm.jsp";
-// 			}
-// 			else if(value == "3") // 로그아웃 버튼 클릭시 로그아웃 처리
-// 			{
-// 				location.href="member/pro/LogoutPro.jsp";
-// 			}
-// 		}
-	</script>
+	 
 <body>
     <div class="container">
       <a class="navbar-brand" href="index.jsp">홈페이지</a>
@@ -42,13 +27,10 @@
         
           <%
 			// 로그인 안되었을 경우 - 로그인, 회원가입 버튼을 보여준다.
-			if(session.getAttribute("sessionID")==null){ 
+			if(session.getAttribute("userId")==null){ 
 		  %>
           <li class="nav-item">
-            <a class="nav-link" href="login.jsp">로그인</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">회원가입</a>
+            <a class="nav-link" href="signUpNInForm.jsp">로그인/회원가입</a>
           </li>
           
           <%
@@ -56,7 +38,7 @@
 			} else { 
 		  %>
 		  <li class="nav-item">
-            <a class="nav-link" href="logout.jsp">로그아웃</a>
+            <a class="nav-link" href="logOut.jsp">로그아웃</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">내정보</a>
@@ -65,7 +47,9 @@
         </ul>
       </div>
     </div>
-    
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script type="text/javascript">
+	</script>
     
 </body>
 </html>
