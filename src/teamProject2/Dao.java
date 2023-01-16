@@ -13,10 +13,6 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 
-
-
-
-
 public class Dao {
 	private static Dao dao = new Dao();
 
