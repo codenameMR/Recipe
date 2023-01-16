@@ -38,7 +38,7 @@ public class DeleteCommand implements Command {
 				rec_file3.delete();
 			}
 		}		
-		request.setAttribute("result", result);
+		request.setAttribute("delResult", result);
 		
 	}
 

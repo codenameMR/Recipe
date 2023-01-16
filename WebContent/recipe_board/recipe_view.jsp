@@ -64,19 +64,14 @@ if (recipe == null ) {
 	<form action="recipeWriteOk.do" method="post" enctype="multipart/form-data">
 
 	<br><hr><br>
-	<button type="button" onclick="chkDelete(<%=rec_num%>)">삭제하기</button>
-	<button type="button" onclick="location.href='recipelist.do'">목록으로</button>
-	<button type="button" onclick="location.href='recipeUpdate.do?rec_num=<%=rec_num%>'">수정하기</button>
-	<button type="button" onclick="location.href='recipeWrite.do'">신규등록</button>
-    <button type="button" onclick="location.href='recipeLike.do'">좋아요</button>
+	<button type="button" onclick="deleteRec(<%=rec_num%>)">삭제하기</button>
+	<button type="button" id="tolistBtn">목록으로</button>
+	<button type="button" onclick="updateRec(<%=recipe.getRec_num()%>)">수정하기</button>
+	<button type="button" id="writeBtn">신규등록</button>
+    <button type="button" >좋아요</button>
     
     <script type="text/javascript">
-    function chkDelete(rec_num) {
-    	let r = confirm("해당 글을 삭제하시겠습니까?");
-        if (r) {
-        	location.href = "recipeDeleteOk.do?rec_num=" + rec_num;
-        }
-    }
+
     </script>
 </body>
 </html>

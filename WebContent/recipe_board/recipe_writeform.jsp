@@ -82,38 +82,31 @@ String ctx = request.getContextPath();    //콘텍스트명 얻어오기.
 			<!--input type file 테그 속성중에 multiple이라는 속성 -->
 			<!-- 해당 속성을 선택하면 파일이 여러개 선택 되는데, 해당 데이터가 배열로 리턴된다. -->
 			<div>
-				<h3 class="fileuploder">
-					<label>이미지 첨부1 </label> 
+					<strong>이미지 첨부1 </strong> 
 <!-- 					<label class="btn" for="rec_pic_file1">파일등록</label> -->
 					<input id="rec_pic_file1" class="btn" name="rec_pic1" type="file"
 						 accept=".gif, .jpg, .png"
 						onchange="fileUpload()">
-				</h3>
 			</div>
 
 			<div>
-				<h3 class="fileuploder">
-					<label>이미지 첨부2 </label> 
+					<strong>이미지 첨부2 </strong> 
 <!-- 					<label class="btn" for="rec_pic_file2">파일등록</label> -->
 					<input id="rec_pic_file2" class="btn" name="rec_pic2" type="file"
 						 accept=".gif, .jpg, .png"
 						onchange="fileUpload()">
-				</h3>
 			</div>
 			
 			<div>
-				<h3 class="fileuploder">
-					<label>이미지 첨부3 </label> 
+				<strong>이미지 첨부3 </strong> 
 <!-- 					<label class="btn" for="rec_pic_file3">파일등록</label> -->
-					<input id="rec_pic_file3" class="btn" name="rec_pic3" type="file"
+				<input id="rec_pic_file3" class="btn" name="rec_pic3" type="file"
 						 accept=".gif, .jpg, .png"
 						onchange="fileUpload()">
-				</h3>
 			</div>
 
-			<dl>
-				<dt>카테고리</dt>
-				<dd> 
+			<div>
+				<strong>카테고리</strong>
 				   <select name="rec_category">
 				   		<optgroup label="선택">
     					<%
@@ -121,9 +114,8 @@ String ctx = request.getContextPath();    //콘텍스트명 얻어오기.
     					%>
     					  <option value="<%=categoryName%>"><%=categoryName%></option>  	
     					  <%} %>
-  				</select>
-				</dd>
-			</dl>
+  				   </select>
+			</div>
 
 			<input type="submit" value="등록하기">
 		</form>

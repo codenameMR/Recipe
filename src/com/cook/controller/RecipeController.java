@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cook.command.*;
+import com.oreilly.servlet.MultipartRequest;
+
 
 @WebServlet("*.do")
 public class RecipeController extends HttpServlet {
@@ -75,7 +77,7 @@ public class RecipeController extends HttpServlet {
 		case "/recipeDeleteOk.do":
 			command = new DeleteCommand();
 			command.execute(request, response);
-			viewPage = "/recipe_board/recipe_delete.jsp";
+			viewPage = "/index.jsp";
 			break;
 		case "/recipeSearch.do":
 			command = new SearchCommand();

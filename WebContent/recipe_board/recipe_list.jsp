@@ -1,5 +1,6 @@
-<%@page import="com.cook.model.*"%>
+<%@page import="com.cook.model.RecipeDAO"%>
 <%@page import="java.util.List"%>
+<%@page import="com.cook.model.Recipe"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -54,7 +55,7 @@ table {
 		%>
 		<tr>
 			<td><%=recipe.getRec_num()%></td>
-			<td><a href="<%=recipe.getRec_num()%>"><%=recipe.getRec_title()%></a></td>
+			<td><a href="javascript:void(0)" onclick="view(<%=recipe.getRec_num()%>)"><%=recipe.getRec_title()%></a></td>
 			<td><%=recipe.getUser_id()%></td>
 			<td><%=recipe.getRec_views()%></td>
 			<td><%=recipe.getRec_likes()%></td>
@@ -71,7 +72,8 @@ table {
 	<br>
 	
 	<div style="height:10px"></div>
-	<form action="recipeSearch.do" method="post">
+	
+	<form name="searchform" id="searchform">
 	<% if(request.getAttribute("search_word") == null) { %>
 	<input type=text placeholder="검색어 입력" name="search_word" required>
 	<% } else {
@@ -84,7 +86,7 @@ table {
 		<option value="rec_content">글내용</option>
 		<option value="rec_category">카테고리</option>
 	</select>
-	<input type="submit" value="검색하기" id="searchBtn">
+	<input type="button" value="검색하기" onClick="searchRec()">
 	</form>
 </body>
 
