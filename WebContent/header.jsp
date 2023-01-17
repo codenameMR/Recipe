@@ -41,7 +41,7 @@
             <a class="nav-link" href="logOut.jsp">로그아웃</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">내정보</a>
+            <a class="nav-link" href="myPage.jsp">내정보</a>
           </li>
 		  <%}%>	
         </ul>

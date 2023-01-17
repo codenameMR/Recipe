@@ -2,6 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" session="false"%>
 <%
+request.setCharacterEncoding("utf-8");
+
 int delResult = 0;
 if (request.getAttribute("delResult") != null) {
 	delResult = (Integer)request.getAttribute("delResult");
