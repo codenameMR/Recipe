@@ -11,8 +11,12 @@ int insertResult = 0;
 if (request.getAttribute("insertResult") != null) {
 insertResult = (Integer)request.getAttribute("insertResult");
 }
-//Recipe recipe = (Recipe)request.getAttribute("recipe");
 
+int updateResult = 0;
+if (request.getAttribute("updateResult") != null) {
+updateResult = (Integer)request.getAttribute("updateResult");
+}
+//Recipe recipe = (Recipe)request.getAttribute("recipe");
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -95,26 +99,23 @@ insertResult = (Integer)request.getAttribute("insertResult");
 		//레시피 게시판  정렬
 		function orderlist() {
 			var o = document.orderform;
+			console.log("orderlist1")
 			//console.log(o.num.value);
-			if (o.num.value === "") { //공란이면
-				alert("옵션을 선택해주세요.")
-			} else {
 				$.ajax({
 					url : 'recipelist.do?num=' + o.num.value,
 					success : function(data) {
 						$('#center_right').html(data);
 					}
 				});
-			}
 		}
 
 		//레시피 게시판 검색 (post)
 		function searchRec() {
 			//let sendData = "username="+$('input[name=username]').val();   //폼의 이름 값을 변수 안에 담아줌
 			let formData = $("#searchform").serialize();
-			console.log(formData);
+			//console.log(formData);
 				$.ajax({
-					url : 'recipeSearch.do',
+					url : 'recipelist.do',
 					type : 'POST',
 					data : formData,
 					success : function(data) {
@@ -122,6 +123,20 @@ insertResult = (Integer)request.getAttribute("insertResult");
 					}
 				});
 			}
+		//레시피 게시판 검색후 정렬
+		function orderlist2() {
+			let formData2 = $("#orderform2").serialize();
+			//console.log("orderlist2");
+			//console.log(formData2);
+			$.ajax({
+				url : 'recipelist.do',
+				type : 'POST',
+				data : formData2,
+				success : function(data) {
+					$('#center_right').html(data);
+				}
+			});
+		}
 	
 		//목록으로
 		$(document).on("click", "#tolistBtn", function() {
@@ -155,7 +170,7 @@ insertResult = (Integer)request.getAttribute("insertResult");
 			let formData = $("#searchform").serialize();
 			console.log(formData);
 				$.ajax({
-					url : 'recipeSearch.do',
+					url : 'recipeWrite.do',
 					type : 'POST',
 					data : formData,
 					success : function(data) {
@@ -239,6 +254,23 @@ insertResult = (Integer)request.getAttribute("insertResult");
 			});
 		</script>	
 	<% } %>
-	
+			<!-- 레시피 게시글 수정  -->
+	<% if (request.getAttribute("updateResult")!=null && updateResult == 0){ %>
+		<script>	
+			alert("레시피 게시글 수정 실패");
+		</script>	
+	<% } else if (request.getAttribute("updateResult")!=null && updateResult > 0){ %>
+		<script>
+			alert("레시피 게시글 수정 성공");
+			$.ajax({
+				url : 'recipelist.do',
+				type : 'get',
+				success : function(data) {
+					console.log(data);
+					$('#center_right').html(data);
+				}
+			});
+		</script>	
+	<% } %>
 	
 </html>

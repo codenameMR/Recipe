@@ -15,6 +15,6 @@
 	<script>
 		alert("레시피 수정 성공");
 <%-- 		location.href = "recipeView.do?rec_num=<%=recipe.getRec_num()%>"; --%>
-			location.href="../index.jsp"
+			location.href="index.jsp"
 	</script>
 <% } %>

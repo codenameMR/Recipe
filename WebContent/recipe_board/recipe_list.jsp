@@ -6,6 +6,22 @@
 <%
 List<Recipe> recipeList = (List<Recipe>) request.getAttribute("recipeList");
 //Object에서 List<Recipe>로 타입변환
+
+String[] rec_class = {"최신순","오래된순","조회순","좋아요순"};
+int order = 0;
+if (request.getAttribute("order") != null) {
+	order = (Integer) request.getAttribute("order");
+}
+
+String search_word = "";
+if(request.getAttribute("search_word") != null) {
+search_word = (String) request.getAttribute("search_word");
+}
+
+String search_class = "";
+if(request.getAttribute("search_class") != null) {
+search_class = (String) request.getAttribute("search_class");
+}
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -30,14 +46,35 @@ table {
 	<h1>전체 레시피 목록</h1>
     <hr><br>
     <label>정렬하기</label>
-    <form action="recipelist.do" name="orderform">
-    <select onchange="orderlist()" name="num" >  <!--order(option의 value) -->
-		<option value="0">최신순</option>
-		<option value="1">오래된 순</option>
-		<option value="2">조회순</option>
-		<option value="3">좋아요순</option>
-	</select>
-	</form>
+    <%if (search_word=="" || search_class=="") {%> 
+    	<form name="orderform">
+    		<select onchange="orderlist()" name="num" > 
+	 	 	<%for(int i = 0; i < rec_class.length; i++) { 
+    			if (i == order) {  %> 
+       				<option value="<%=i%>" selected><%=rec_class[i]%></option> 
+         		<% } else { %>
+    				<option value="<%=i%>" > <%=rec_class[i]%> </option>  	
+    			<%} 
+      		 } %>
+      	 	</select>
+      	 </form>
+    <%} else if (search_word!="" && search_class!="") { %>
+    	<form name="orderform2" id="orderform2">
+    		<input type="hidden" name="search_word" value=<%=search_word%>>
+     		<input type="hidden" name="search_class" value=<%=search_class%>>
+    		<select onchange="orderlist2()" name="num"> 
+	 		<%for(int i = 0; i < rec_class.length; i++) { 
+    			if (i == order) {  %> 
+       				<option value="<%=i%>" selected><%=rec_class[i]%></option> 
+         		<% } else { %>
+    				<option value="<%=i%>" > <%=rec_class[i]%> </option>  	
+    			<%}
+     		}%>
+     		</select>	
+		</form>
+    <%} %>  
+		
+	
 	<div style="height:20px;"></div>
 	<table>
 		<tr>
@@ -78,11 +115,10 @@ table {
 	<div style="height:10px"></div>
 	
 	<form name="searchform" id="searchform">
-	<% if(request.getAttribute("search_word") == null) { %>
-	<input type=text placeholder="검색어 입력" name="search_word" required>
-	<% } else {
-		String search_word = (String) request.getAttribute("search_word"); %>
-	<input type=text placeholder="<%=search_word%>" name="search_word" required>	
+	<% if(search_word == "") { %>
+		<input type=text placeholder="검색어 입력" name="search_word" required>
+	<% } else { %>
+		<input type=text placeholder="<%=search_word%>" name="search_word" required>	
 	<% } %>
 	<select name="search_class" >  <!--order(option의 value) -->
 		<option value="rec_title">글제목</option>

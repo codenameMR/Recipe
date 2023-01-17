@@ -48,7 +48,7 @@ String rec_category = recipe.getRec_category();
 		<strong>카테고리 : </strong>
 		<select name="rec_category">
     			<%for(String categoryName : rec_categories) { 
-    				  	if (categoryName == recipe.getRec_category()) {  %> 
+    				  	if (categoryName.equals(recipe.getRec_category())) {  %> 
        				  <option value="<%=rec_category%>" selected><%=rec_category%></option> 
          			   <% } else { %>
     					<option value="<%=categoryName%>" > <%=categoryName%> </option>  	

@@ -74,7 +74,7 @@ public class UpdateCommand implements Command{
 
 		request.setAttribute("rec_num", rec_num);
 		request.setAttribute("recipe", recipe);
-		request.setAttribute("result", result);
+		request.setAttribute("updateResult", result);
 		
 	}
 

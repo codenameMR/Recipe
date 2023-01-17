@@ -151,24 +151,24 @@ public class RecipeDAO {
 	}
 
 	// 레시피 게시글 목록  정렬
-	public List<Recipe> selectAllByOrder(int num) {
+	public List<Recipe> selectAllByOrder(int num, List<Recipe> lst) {
 		List<Recipe>lst2 = new ArrayList<>();
 		switch (num) {
 		case 0: // 기본 최신순
-			return recLst;
+			return lst;
 		case 1: // 오래된 순
-			recLst.stream()
+			lst.stream()
 			.sorted(Comparator.comparing(Recipe::getRec_num))
 			.forEach(n->lst2.add(n));
 
 			return lst2;
 		case 2: // 조회순
-			recLst.stream()
+			lst.stream()
 			.sorted(Comparator.comparing(Recipe::getRec_views).reversed())
 			.forEach(n->lst2.add(n));
 			return lst2;
 		case 3: // 좋아요순
-			recLst.stream()
+			lst.stream()
 			.sorted(Comparator.comparing(Recipe::getRec_likes).reversed())
 			.forEach(n->lst2.add(n));
 			return lst2;

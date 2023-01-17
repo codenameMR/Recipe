@@ -17,7 +17,7 @@
 <%} else { %>
 	<script>
 		alert("레시피 등록 성공");
-		location.href = "/projectCook4/index.jsp";
+		location.href = "index.jsp";
 	</script>
 <% } %>
 

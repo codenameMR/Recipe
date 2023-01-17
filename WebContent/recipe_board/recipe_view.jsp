@@ -8,7 +8,7 @@ String login_id = "";
 if (session.getAttribute("userId") != null) {
 login_id = (String)session.getAttribute("userId");
 }
-System.out.println(login_id);
+
 if (recipe == null ) {
 %>
 <script>
@@ -73,12 +73,13 @@ if (recipe == null ) {
 	
 	<form action="recipeWriteOk.do" method="post" enctype="multipart/form-data">
 	<br><hr><br>
-	<button type="button" onClick="deleteRec(<%=rec_num%>)">삭제하기</button>
 	<button type="button" id="tolistBtn">목록으로</button>
 	<% if ( login_id.equals(writer_id) ) { %>
-		<button type="button" onclick="updateRec(<%=recipe.getRec_num()%>)">수정하기</button>
+		<button type="button" onclick="updateRec(<%=rec_num%>)">수정하기</button>
+		<button type="button" onClick="deleteRec(<%=rec_num%>)">삭제하기</button>
 	<%} else {%>
 		<button type="button" disabled>수정하기</button>
+		<button type="button" disabled>삭제하기</button>
 	<%} %>
 	</form>
 	<button type="button" id="writeBtn">신규등록</button>

@@ -72,18 +72,18 @@ public class RecipeController extends HttpServlet {
 		case "/recipeUpdateOk.do":
 			command = new UpdateCommand();
 			command.execute(request, response);
-			viewPage = "/recipe_board/recipe_update.jsp";
+			viewPage = "/index.jsp";
 			break;
 		case "/recipeDeleteOk.do":
 			command = new DeleteCommand();
 			command.execute(request, response);
 			viewPage = "/index.jsp";
 			break;
-		case "/recipeSearch.do":
-			command = new SearchCommand();
+		/*case "/recipeSearch.do":
+			command = new ListCommand();
 			command.execute(request, response);
 			viewPage = "/recipe_board/recipe_list.jsp";
-			break;
+			break;*/
 		}
 
 		// view page로 forward
