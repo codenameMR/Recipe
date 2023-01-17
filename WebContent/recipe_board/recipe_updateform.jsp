@@ -41,6 +41,7 @@ String rec_category = recipe.getRec_category();
 		<strong>제목 : </strong>
 		<input type="text" name="rec_title" value="<%=rec_title %>" required/><br>
 		<strong>글쓴이(id) : </strong> <%=user_id%><br>
+		<input type="hidden" name="user_id" value="<%=session.getAttribute("userId")%>">
 		<strong>내용 : </strong>
 		<textarea name="rec_content" 
 						style="width: 300px; height: 200px;" required><%=rec_content%></textarea><br>
@@ -88,8 +89,7 @@ String rec_category = recipe.getRec_category();
 	</form>
 	
 	<br><hr><br>
-	<button onclick="histroy.back()">뒤로가기</button>
-	<button onclick="location.href='recipelist.do'">목록으로</button>
+	<button id="tolistBtn">목록으로</button>
 	
 
 </body>

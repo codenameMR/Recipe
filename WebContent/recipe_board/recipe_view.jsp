@@ -4,18 +4,23 @@
 <%@ page import="java.util.*"%>
 <%
 Recipe recipe = (Recipe) request.getAttribute("recipe");
+String login_id = "";
+if (session.getAttribute("userId") != null) {
+login_id = (String)session.getAttribute("userId");
+}
+System.out.println(login_id);
 if (recipe == null ) {
 %>
 <script>
 	alert("해당 정보가 삭제되었거나 존재하지 않습니다.");
-	history.back();
 </script>
 <%
 	return; //if 문 아래 소스코드 실행 x.
 }
 %>
 
-<%
+<%	String writer_id = recipe.getUser_id();
+
 	int rec_num = recipe.getRec_num();
 	String rec_title = recipe.getRec_title();
 	String rec_content = recipe.getRec_content();
@@ -51,22 +56,31 @@ if (recipe == null ) {
 	<h1>레시피 제목 : <%=rec_title%></h1>
 	<hr>
 	<strong>종류 : </strong> <%=rec_category%><br>
+	<strong>글쓴이 : </strong> <%=writer_id%><br>
 	<strong>내용 : </strong> <%=rec_content%><br>
 	<strong>조회수 : </strong> <%=rec_views%><br>
 	<strong>좋아요수 : </strong> <%=rec_likes%><br>
 	<strong>등록일 :</strong> <%=rec_date%><!-- <br><br> -->
 	<div class=imgView> 
+		<%if(rec_pic1 != "") {%>
 		<img src="/projectCook1/rec_pic/<%=rec_pic1%>" alt="게시글 <%=rec_num%>의 picture1">
+		<%} if(rec_pic2 != "") {%>
 		<img src="/projectCook1/rec_pic/<%=rec_pic2%>" alt="게시글 <%=rec_num%>의 picture2">
+		<%} if(rec_pic3 != "") {%>
 		<img src="/projectCook1/rec_pic/<%=rec_pic3%>" alt="게시글  <%=rec_num%>의 picture3">
+		<%} %>
 	</div>
 	
 	<form action="recipeWriteOk.do" method="post" enctype="multipart/form-data">
-
 	<br><hr><br>
-	<button type="button" onclick="deleteRec(<%=rec_num%>)">삭제하기</button>
+	<button type="button" onClick="deleteRec(<%=rec_num%>)">삭제하기</button>
 	<button type="button" id="tolistBtn">목록으로</button>
-	<button type="button" onclick="updateRec(<%=recipe.getRec_num()%>)">수정하기</button>
+	<% if ( login_id.equals(writer_id) ) { %>
+		<button type="button" onclick="updateRec(<%=recipe.getRec_num()%>)">수정하기</button>
+	<%} else {%>
+		<button type="button" disabled>수정하기</button>
+	<%} %>
+	</form>
 	<button type="button" id="writeBtn">신규등록</button>
     <button type="button" >좋아요</button>
     

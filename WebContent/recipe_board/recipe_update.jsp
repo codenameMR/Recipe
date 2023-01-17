@@ -9,11 +9,12 @@
 <% if (result ==0){%> 
    	<script>
  	  	alert("레시피 수정 실패");
-   		history.back();
+ 	  	//history.back();
    	</script>
 <%} else { %>
 	<script>
 		alert("레시피 수정 성공");
-		location.href = "recipeView.do?rec_num=<%=recipe.getRec_num()%>";
+<%-- 		location.href = "recipeView.do?rec_num=<%=recipe.getRec_num()%>"; --%>
+			location.href="../index.jsp"
 	</script>
 <% } %>
