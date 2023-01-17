@@ -68,7 +68,11 @@ table {
 		%>
 	</table>
 	<br>
-	<button id="writeBtn">글쓰기</button>	
+	<%if(session.getAttribute("userId")==null) {%>
+		<button id="writeBtn" disabled>글쓰기</button>	
+	<%} else { %>
+		<button id="writeBtn">글쓰기</button>	
+	<%} %>
 	<br>
 	
 	<div style="height:10px"></div>

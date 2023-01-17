@@ -3,7 +3,8 @@
 	pageEncoding="UTF-8"%>
 <%
 String[] rec_categories = {"한식","중식","일식","양식","기타"};
-String ctx = request.getContextPath();    //콘텍스트명 얻어오기.
+//String ctx = request.getContextPath();    //콘텍스트명 얻어오기.
+
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -54,7 +55,7 @@ String ctx = request.getContextPath();    //콘텍스트명 얻어오기.
 		<h1>레시피 글쓰기</h1>
 		<form action="recipeWriteOk.do" method="post" enctype="multipart/form-data">
 			<!-- memberID 파라미터 전달 용 숨은 input태그 -->
-			<input type="hidden" name="user_id" value="${sessionScope.memberID}">
+			<input type="hidden" name="user_id" value="<%=session.getAttribute("userId")%>">
 			<dl>
 				<dt>제목</dt>
 				<dd>
@@ -66,8 +67,7 @@ String ctx = request.getContextPath();    //콘텍스트명 얻어오기.
 			<dl>
 				<dt>글쓴이(id)</dt>
 				<dd>
-					<input type="text" placeholder="아이디 입력" name="user_id"
-						required>
+					<label><%=session.getAttribute("userId")%></label>
 				</dd>
 			</dl>
 			

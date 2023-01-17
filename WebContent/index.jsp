@@ -12,6 +12,7 @@ if (request.getAttribute("insertResult") != null) {
 insertResult = (Integer)request.getAttribute("insertResult");
 }
 //Recipe recipe = (Recipe)request.getAttribute("recipe");
+
 %>
 <!DOCTYPE html>
 <html lang="ko">
