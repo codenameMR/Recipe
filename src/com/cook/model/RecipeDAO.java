@@ -23,7 +23,6 @@ public class RecipeDAO {
 		return instance;
 	}
 	
-	public List<Recipe> recLst;
 	
 	// connection
 	private Connection conn = getConnect();
@@ -122,7 +121,7 @@ public class RecipeDAO {
 	public List<Recipe> selectAllRecipe() {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		recLst = new ArrayList<>();
+		List<Recipe> recLst = new ArrayList<>();
 		String sql = "select * from recipe_board order by rec_num desc";
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -226,8 +225,8 @@ public class RecipeDAO {
 		return recipe;
 	}
 	
-	
-	//레시피 게시글 수정시, 기존 내용 불러오기  (조회수 증가x)
+	//게시글 번호로 게시글 내용 하나 불러오기  (조회수 증가x)
+	//용도1. 레시피 게시글 수정시, 기존 내용 불러올 때 
 	public Recipe selectRecipe(int rec_num) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -335,15 +334,85 @@ public class RecipeDAO {
 				Recipe recipe = new Recipe(rec_num, user_id, rec_title, rec_content, rec_date, rec_views, rec_likes, rec_category, rec_pic1, rec_pic2, rec_pic3);
 				searchedLst.add(recipe);
 			}
-			recLst = searchedLst;
-			return recLst;
+			return searchedLst;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			closeAll(pstmt);
 		}
-		return null;
+		return searchedLst;
 	}
+	
+	//레시피글 좋아요 버튼 누를시. (좋아요 누른 후, 좋아요수 리턴)
+	public int likeRec(int rec_num) throws SQLException {
+		int rec_likes = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		//(1) 좋아요 증가 쿼리
+		String up_likes= "UPDATE recipe_board SET rec_likes = rec_likes + 1 WHERE rec_num = ?";
+		//(2) 좋아요 증가 후 좋아요 수 불러오기 쿼리
+		String SELECT_BY_REC_NUM = "SELECT * FROM recipe_board WHERE rec_num = ? ";
+		try {
+			conn.setAutoCommit(false);
+			//(1) 쿼리 실행
+			pstmt = conn.prepareStatement(up_likes);
+			pstmt.setInt(1, rec_num);
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			//(2) 쿼리 실행
+			pstmt = conn.prepareStatement(SELECT_BY_REC_NUM);
+			pstmt.setInt(1, rec_num);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				rec_likes = rs.getInt("rec_likes");
+			}
+			conn.commit();
+			return rec_likes;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			conn.rollback();
+		} finally {
+			closeAll(pstmt, rs);
+		}
+		return rec_likes;
+	}
+	
+	//레시피글 좋아요취소 버튼 누를시. (좋아요 취소 후, 좋아요수 리턴)
+	public int minusLikeRec(int rec_num) throws SQLException {
+		int rec_likes = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		//(1) 좋아요 감소 쿼리
+		String down_likes= "UPDATE recipe_board SET rec_likes = rec_likes - 1 WHERE rec_num=?";
+		//(2) 좋아요 감소후 좋아요 수 불러오기 쿼리
+		String SELECT_BY_REC_NUM = "SELECT * FROM recipe_board WHERE rec_num = ? ";
+		try {
+			conn.setAutoCommit(false);
+			//(1) 쿼리 실행
+			pstmt = conn.prepareStatement(down_likes);
+			pstmt.setInt(1, rec_num);
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			//(2) 쿼리 실행
+			pstmt = conn.prepareStatement(SELECT_BY_REC_NUM);
+			pstmt.setInt(1, rec_num);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				rec_likes = rs.getInt("rec_likes");
+			}
+			conn.commit();
+			return rec_likes;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			conn.rollback();
+		} finally {
+			closeAll(pstmt, rs);
+		}
+		return rec_likes;
+	}
+	
 	
 //	public static void main(String[] args) {
 //		RecipeDAO recipeDao = RecipeDAO.getInstance();
