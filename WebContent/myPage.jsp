@@ -24,17 +24,27 @@ font-size: 30px;
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <jsp:include page="header.jsp" />
   </nav>
-  <form>
+  <form action="changePW.jsp" id="updatePWForm">
    <div class="container" id="center" style="height:1200px">
   <label>이름 : </label><label id="id"><%=memberInfo[2] %></label><br>
   <label>아이디 : </label><label id="name"><%=memberInfo[0] %></label><br>
-  <label>비밀번호 : </label><label id="password">*********</label>
-  <input type="submit" action="changePW.jsp" value="비밀번호 변경">
-  <label ></label>
+  <label>비밀번호 : </label><input id="password" name="password" placeholder="*******">
+  <input type="button" id="changepw" value="비밀번호 변경">
+  <div id="statement">
+  </div>
   </div>
   </form>
   <script>
- 
+  $('#changepw').click(function() {
+		$.ajax({
+			url : 'changePW.jsp',
+			type : 'get',
+			data: $("#updatePWForm").serialize(),
+			success : function(val) {
+				$('#statement').html(val);
+			}
+		});
+	});
   </script>
 </body>
 </html>
