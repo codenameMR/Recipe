@@ -115,4 +115,26 @@ public class Dao {
 		return null;
 		
 	}
+	
+	public String[] memberMyPage(MemberInfo mi) {
+		String sql = "SELECT * FROM MEMBER_INFO WHERE USER_ID = ?";
+		String[] userInfo = new String[3];
+		try {
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			psmt.setString(1, mi.getUserId());
+			ResultSet rs = psmt.executeQuery();
+			while(rs.next()) {
+				userInfo[0] = rs.getString(1);
+				userInfo[1] = rs.getString(2);
+				userInfo[2] = rs.getString(3);
+			}
+			psmt.close();
+			return userInfo;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
 }

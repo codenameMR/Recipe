@@ -10,6 +10,7 @@
 </head>
 <body>
 <% 
+request.setCharacterEncoding("utf-8");
 Dao dao = Dao.getInstance();
 String name = request.getParameter("name");
 String userId = request.getParameter("userId");

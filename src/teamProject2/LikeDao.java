@@ -158,8 +158,10 @@ public class LikeDao {
 	
 	//insert RecipeLike
 	public int InsertRec(RecLike rec) {
-		String sql = "insert into RecLike(user_id, rec_num, liked_Date)"
-					+ "values (?,?,to_char(sysdate,'yyyy/mm/dd'))";
+		
+		String sql = "insert into RecLike(no,user_id, res_num, liked_Date)"
+					+ "values (RECLIKE_SEQ.NEXTVAL,?,?,to_char(sysdate,'yyyy/mm/dd'))";
+
 		try {
 			PreparedStatement pstm = conn.prepareStatement(sql);
 			pstm.setString(1, rec.getUserid());
@@ -173,6 +175,7 @@ public class LikeDao {
 		}
 		return 0;
 	}
+
 	
 	//좋아요 누른 적 있나, 좋아요 DB검색 
 	public RecLike searchRecLike(String login_id, int rec_num) {
@@ -198,4 +201,31 @@ public class LikeDao {
 	}
 	
 	
+
+	// 로그인 userid로 recnum 리턴해주기
+	public int SearchLike(String user_id) {
+		  int rec = 0;
+		  String sql = "SELECT rec_num "
+		      		+ "FROM rec_liked "
+		      		+ "WHERE USER_ID =?";
+		  try {
+		      PreparedStatement pstm = conn.prepareStatement(sql);
+		      ResultSet rs = pstm.executeQuery();
+		      
+		      if (rs.next()) {
+	  				int recnum = rs.getInt("rec_num");
+	  				rec = recnum;
+	  			}
+		      
+	  			rs.close();
+	  			pstm.close();
+	  			return rec;
+		      
+		    } catch (SQLException e) {
+		    	// TODO Auto-generated catch block
+				e.printStackTrace();
+		    }
+			return 0;
+		  }
+
 }
