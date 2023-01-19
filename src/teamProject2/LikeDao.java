@@ -101,7 +101,7 @@ public class LikeDao {
 	 
 	// DEL REC	
 	public int DeleteRec(RecLike rec) {
-			String sql ="DELETE FROM RECLIKE WHERE USER_ID = ? AND REC_NUM = ?";
+			String sql ="DELETE FROM rec_liked WHERE USER_ID = ? AND REC_NUM = ?";
 			try {
 				PreparedStatement pstm = conn.prepareStatement(sql);
 				pstm.setString(1, rec.getUserid());
@@ -159,7 +159,7 @@ public class LikeDao {
 	//insert RecipeLike
 	public int InsertRec(RecLike rec) {
 		
-		String sql = "insert into RecLike(no,user_id, res_num, liked_Date)"
+		String sql = "insert into rec_liked(no,user_id, res_num, liked_Date)"
 					+ "values (RECLIKE_SEQ.NEXTVAL,?,?,to_char(sysdate,'yyyy/mm/dd'))";
 
 		try {
@@ -182,7 +182,7 @@ public class LikeDao {
 		ResultSet rs = null;
 		PreparedStatement pstm = null;
 		RecLike reclike = null;
-		String sql = "select * from reclike where user_id=? and rec_num=?";
+		String sql = "select * from rec_liked where user_id=? and rec_num=?";
 		try {
 			pstm = conn.prepareStatement(sql);
 			pstm.setString(1,login_id);
