@@ -51,7 +51,7 @@ updateResult = (Integer)request.getAttribute("updateResult");
         <h1 class="my-4">게시판</h1>
         <div class="list-group">
           <a href="javascript:void(0)" class="list-group-item" id="recipe_board">레시피 게시판</a>
-          <a href="#" class="list-group-item">맛집 게시판</a>
+          <a href="restaurant/list.jsp" class="list-group-item">맛집 게시판</a>
           <a href="#" class="list-group-item">게시판3</a>
            <a href="#" class="list-group-item">게시판4</a>
             <a href="#" class="list-group-item">게시판5</a>

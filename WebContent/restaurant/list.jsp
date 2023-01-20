@@ -6,6 +6,7 @@
 <%@ page import="java.sql.*" %>
 <%
 	List<Restaurant> res_list = ResDAO.getInstance().selectAll();
+	String user_id=(String)session.getAttribute("userId");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -47,8 +48,15 @@
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr><td colspan="4" height="5"></td></tr>
   <tr align="center">
+  <% if(user_id !=null){
+	 %>
+  
    <td><input type=button value="글쓰기" OnClick="window.location='write.jsp'"></td>
-  </tr>
+  
+  <% 	
+	}
+	%>
+	</tr>
 </table>
 </body> 
 </html>

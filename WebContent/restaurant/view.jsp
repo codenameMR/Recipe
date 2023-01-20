@@ -11,6 +11,8 @@
 
 	ResDAO resdao = ResDAO.getInstance();
 	Restaurant restr = resdao.view(res_num);
+	String writer_id=restr.getUser_id();
+	String user_id=(String)session.getAttribute("userId");
 	
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -82,9 +84,17 @@
       <td width="0">&nbsp;</td>
       <td colspan="2" width="399"><input type=button value="글쓰기"  OnClick="window.location='write.jsp'">
 	<input type=button value="목록" OnClick="window.location='list.jsp'">
+	<%if(user_id.equals(writer_id)){
+	%>
+	
 	<button type="button" OnClick="window.location='modify.jsp?res_num=<%=res_num%>'">수정하기</button>
 	<button type=button  OnClick="window.location='delete_ok.jsp?res_num=<%=res_num%>'">삭제하기</button> 
-	
+	<%
+	}else{
+	%>
+	<button type="button" disabled>수정하기</button>
+	<button type="button" disabled>삭제하기</button>
+	<%} %>
       <td width="0">&nbsp;</td>
      </tr>
     </table>

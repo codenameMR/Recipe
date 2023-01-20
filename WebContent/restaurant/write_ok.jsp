@@ -11,7 +11,6 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	
-	
 	String user_id = request.getParameter("user_id");
 	String title = request.getParameter("title");
 	String content = request.getParameter("content");
@@ -19,8 +18,6 @@
 	String picture2 = request.getParameter("picture2");
 	String picture3 = request.getParameter("picture3");
 	String loc = request.getParameter("loc");
-	
-	
 	
 	Restaurant restaurant = new Restaurant(user_id, title, content, picture1, picture2, picture3, loc);
 	ResDAO resdao = ResDAO.getInstance();
