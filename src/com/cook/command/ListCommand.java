@@ -20,8 +20,8 @@ public class ListCommand implements Command{
 		String search_class = request.getParameter("search_class"); 
 		String search_word = request.getParameter("search_word"); 
 		List<Recipe> searchedLst = null;
-//		System.out.println(search_class);
-//		System.out.println(search_word);
+		//System.out.println(search_class);
+		//System.out.println(search_word);
 		if (search_class!=null && search_word!=null) {
 			search_class = request.getParameter("search_class");
 			search_word = request.getParameter("search_word");

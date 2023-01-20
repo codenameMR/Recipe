@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import com.cook.model.Recipe;
@@ -116,6 +118,8 @@ public class LikeDao {
 			return 0;
 	}
 	
+	
+	
 	// DEL RES	
 	public int DeleteRES(ResLike res) {
 			String sql ="DELETE FROM RES_LIKED WHERE USER_ID = ? AND  RES_NUM = ?";
@@ -133,6 +137,23 @@ public class LikeDao {
 				}
 				return 0;
 		}
+	
+	//레시피 게시글 삭제시, 해당 글 좋아요 모두 삭제
+	public int DeleteRecAll(int rec_num) {
+			String sql ="DELETE FROM rec_liked WHERE REC_NUM = ?";
+			try {
+				PreparedStatement pstm = conn.prepareStatement(sql);
+				pstm.setInt(2, rec_num);
+				int result = pstm.executeUpdate();
+				pstm.close();
+				return result;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return 0;
+	}
+	
 	
 	//insert ResLike
 	public int InsertRes(ResLike res) {
@@ -159,7 +180,7 @@ public class LikeDao {
 	//insert RecipeLike
 	public int InsertRec(RecLike rec) {
 		
-		String sql = "insert into rec_liked(no,user_id, res_num, liked_Date)"
+		String sql = "insert into rec_liked(no,user_id, rec_num, liked_Date)"
 					+ "values (RECLIKE_SEQ.NEXTVAL,?,?,to_char(sysdate,'yyyy/mm/dd'))";
 
 		try {
@@ -227,5 +248,54 @@ public class LikeDao {
 		    }
 			return 0;
 		  }
+	
+	
+	public List<Recipe> recLst;
+	// 좋아요 한 레시피 게시글 목록  (기본정렬 최신순)
+	public List<Recipe> selectLikeAll(String userId) {
+		List<Recipe> searchedLst = new ArrayList<>();
+			PreparedStatement pstmt = null; 
+			ResultSet rs = null;
+			try {
+				pstmt = conn.prepareStatement("select * from recipe_board where rec_num in (select rec_num from REC_LIKED where user_id = ?)");
+				pstmt.setString(1, userId); 
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					int rec_num = rs.getInt("rec_num");
+					String user_id = rs.getString("user_id");
+					String rec_title= rs.getString("rec_title");
+					String rec_content= rs.getString("rec_content");
+					String rec_date= rs.getString("rec_date");
+					int rec_views = rs.getInt("rec_views");
+					int rec_likes = rs.getInt("rec_likes");
+					String rec_category= rs.getString("rec_category");
+					String rec_pic1= rs.getString("rec_pic1");
+					String rec_pic2= rs.getString("rec_pic2");
+					String rec_pic3= rs.getString("rec_pic3");
+					Recipe recipe = new Recipe(rec_num, user_id, rec_title, rec_content, rec_date, rec_views, rec_likes, rec_category, rec_pic1, rec_pic2, rec_pic3);
+					searchedLst.add(recipe);
+				}
+					recLst = searchedLst;
+				return recLst;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				closeAll(pstmt);
+			}
+			return null;
+		}
+
+		//pstmt, rs 닫기
+		// 메소드 오버로딩
+		// closeAll method 1
+		public void closeAll(PreparedStatement pstmt) {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
 
 }

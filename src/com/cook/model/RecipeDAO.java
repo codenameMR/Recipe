@@ -343,7 +343,7 @@ public class RecipeDAO {
 		return searchedLst;
 	}
 	
-	//레시피글 좋아요 버튼 누를시. (좋아요 누른 후, 좋아요수 리턴)
+	//레시피 글 좋아요 버튼 누를시. (좋아요 누른 후, 좋아요수 리턴)
 	public int likeRec(int rec_num) throws SQLException {
 		int rec_likes = 0;
 		PreparedStatement pstmt = null;

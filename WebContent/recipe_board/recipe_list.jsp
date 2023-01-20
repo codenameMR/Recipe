@@ -18,6 +18,8 @@ if(request.getAttribute("search_word") != null) {
 search_word = (String) request.getAttribute("search_word");
 }
 
+String[] search_classes = {"글제목","글쓴이","글내용","카테고리"};
+String[] search_values = {"rec_title","user_id","rec_content","rec_category"};
 String search_class = "";
 if(request.getAttribute("search_class") != null) {
 search_class = (String) request.getAttribute("search_class");
@@ -43,8 +45,9 @@ table {
 <body>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<div style="height:20px"></div>
 	<h1>전체 레시피 목록</h1>
-    <hr><br>
+    <hr>
     <label>정렬하기</label>
     <%if (search_word=="" || search_class=="") {%> 
     	<form name="orderform">
@@ -106,9 +109,9 @@ table {
 	</table>
 	<br>
 	<%if(session.getAttribute("userId")==null) {%>
-		<button id="writeBtn" disabled>글쓰기</button>	
+		<button type="button" onclick="signin()">글쓰기</button>	
 	<%} else { %>
-		<button id="writeBtn">글쓰기</button>	
+		<button type="button" onclick="location.href='recipeWrite.do'">글쓰기</button>	
 	<%} %>
 	<br>
 	
@@ -121,16 +124,23 @@ table {
 		<input type=text placeholder="<%=search_word%>" name="search_word" required>	
 	<% } %>
 	<select name="search_class" >  <!--order(option의 value) -->
-		<option value="rec_title">글제목</option>
-		<option value="user_id">글쓴이</option>
-		<option value="rec_content">글내용</option>
-		<option value="rec_category">카테고리</option>
+		<% for (int i=0; i<4; i++) { 
+			if (search_class.equals(search_values[i])) {
+		%>
+		<option value="<%=search_values[i]%>" selected><%=search_classes[i]%></option>
+		<%  } else { %>
+		<option value="<%=search_values[i]%>"><%=search_classes[i]%></option>
+		<%  } 
+		} %>	
 	</select>
 	<input type="button" value="검색하기" onClick="searchRec()">
 	</form>
 </body>
 
 <script type="text/javascript">
+function signin() {
+	alert.("로그인이 필요한 기능입니다");
+}
 </script>
 
 

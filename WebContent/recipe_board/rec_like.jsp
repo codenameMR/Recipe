@@ -9,8 +9,7 @@ if (session.getAttribute("userId") != null) {
 login_id = (String)session.getAttribute("userId");
 }
 int rec_num = Integer.parseInt(request.getParameter("rec_num"));
-System.out.println(rec_num);
- RecLike newRecLike = new RecLike(login_id, rec_num);
+RecLike newRecLike = new RecLike(login_id, rec_num);
 int resultLike = LikeDao.getInstance().InsertRec(newRecLike);
 int afterLikes = RecipeDAO.getInstance().likeRec(rec_num);
 %>

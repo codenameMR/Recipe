@@ -46,11 +46,16 @@ public class RecipeController extends HttpServlet {
 		
 		
 		switch (com) {
+		case "/recipeBoard.do":
+			command = new ListCommand();
+			command.execute(request, response);
+			viewPage = "/recipe_board/recipe_board.jsp";
+			break;
 		case "/recipelist.do":
 			command = new ListCommand();
 			command.execute(request, response);
 			viewPage = "/recipe_board/recipe_list.jsp";
-			break;
+			break;	
 		case "/recipeView.do":
 		    command = new ReadCommand();
 		    command.execute(request, response);
@@ -62,7 +67,7 @@ public class RecipeController extends HttpServlet {
 		case "/recipeWriteOk.do":
 			command =  new WriteCommand();
 			command.execute(request, response);
-			viewPage = "/index.jsp";
+			viewPage = "/recipe_board/recipe_write.jsp";
 			break;
 		case "/recipeUpdate.do":
 			command = new SelectCommand();
@@ -72,18 +77,13 @@ public class RecipeController extends HttpServlet {
 		case "/recipeUpdateOk.do":
 			command = new UpdateCommand();
 			command.execute(request, response);
-			viewPage = "/index.jsp";
+			viewPage = "/recipe_board/recipe_update.jsp";
 			break;
-		case "/recipeDeleteOk.do":
+		case "/recipeDelete.do":
 			command = new DeleteCommand();
 			command.execute(request, response);
-			viewPage = "/index.jsp";
+			viewPage = "/recipe_board/recipe_delete.jsp";
 			break;
-		/*case "/recipeSearch.do":
-			command = new ListCommand();
-			command.execute(request, response);
-			viewPage = "/recipe_board/recipe_list.jsp";
-			break;*/
 		}
 
 		// view page로 forward
