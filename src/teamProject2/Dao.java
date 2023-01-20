@@ -137,4 +137,26 @@ public class Dao {
 		return null;
 		
 	}
+	
+	public int updatePassword(MemberInfo mi) {
+		String sql = "UPDATE MEMBER_INFO SET PASSWORD = ? WHERE USER_ID = ?";
+		int result = 0;
+		try {
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			psmt.setString(1, mi.getPassword());
+			psmt.setString(2, mi.getUserId());
+			result = psmt.executeUpdate();
+//			ResultSet rs = psmt.executeQuery();
+//			if(rs.next()) {
+//				result = rs.getInt(1);
+//			}
+			psmt.close();
+			return result;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+		
+	}
 }

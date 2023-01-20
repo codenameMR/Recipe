@@ -24,9 +24,8 @@
               <span class="sr-only">(current)</span>
             </a>
           </li>
-        
           <%
-			// 로그인 안되었을 경우 - 로그인, 회원가입 버튼을 보여준다.
+			// 로그인 안 되었을 경우 - 로그인, 회원가입 버튼을 보여준다.
 			if(session.getAttribute("userId")==null){ 
 		  %>
           <li class="nav-item">

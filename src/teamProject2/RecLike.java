@@ -11,6 +11,7 @@ public class RecLike {
 		this.userid = userid;
 		this.recnum = recnum;
 	}
+
 	public int getNo() {
 		return no;
 	}

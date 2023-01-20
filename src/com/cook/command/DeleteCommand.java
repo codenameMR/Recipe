@@ -1,6 +1,5 @@
 package com.cook.command;
 
-
 import java.io.File;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.cook.model.Recipe;
 import com.cook.model.RecipeDAO;
-
 
 public class DeleteCommand implements Command {
 

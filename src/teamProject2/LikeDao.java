@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import com.cook.model.Recipe;
+
 public class LikeDao {
 	private static LikeDao dao = new LikeDao(); 
 	private LikeDao() {}
@@ -69,8 +71,8 @@ public class LikeDao {
 		  		return null;
 
 	}
-	 //레시피 좋아요수 user_id로 카운트
 	 
+	 //레시피 좋아요수 user_id로 카운트
 	 public String recLike(String user_id) {
 		  String rec =  null;
 		    try {
@@ -99,12 +101,11 @@ public class LikeDao {
 	 
 	// DEL REC	
 	public int DeleteRec(RecLike rec) {
-			String sql ="DELETE FROM REC_LIKED WHERE USER_ID = ? AND REC_NUM = ?";
+			String sql ="DELETE FROM rec_liked WHERE USER_ID = ? AND REC_NUM = ?";
 			try {
 				PreparedStatement pstm = conn.prepareStatement(sql);
 				pstm.setString(1, rec.getUserid());
 				pstm.setInt(2, rec.getRecnum());
-				
 				int res = pstm.executeUpdate();
 				pstm.close();
 				return res;
@@ -132,6 +133,7 @@ public class LikeDao {
 				}
 				return 0;
 		}
+	
 	//insert ResLike
 	public int InsertRes(ResLike res) {
 		String sql = "insert into RES_LIKED(no, user_id, res_num, liked_Date)"
@@ -156,16 +158,14 @@ public class LikeDao {
 	
 	//insert RecipeLike
 	public int InsertRec(RecLike rec) {
-		String sql = "insert into RecLike(no,user_id, res_num, liked_Date)"
+		
+		String sql = "insert into rec_liked(no,user_id, res_num, liked_Date)"
 					+ "values (RECLIKE_SEQ.NEXTVAL,?,?,to_char(sysdate,'yyyy/mm/dd'))";
-		
-		
+
 		try {
 			PreparedStatement pstm = conn.prepareStatement(sql);
-	
 			pstm.setString(1, rec.getUserid());
 			pstm.setInt(2, rec.getRecnum());
-			
 			int no = pstm.executeUpdate();
 			pstm.close();
 			return no;
@@ -173,9 +173,35 @@ public class LikeDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return 0;
 	}
+
+	
+	//좋아요 누른 적 있나, 좋아요 DB검색 
+	public RecLike searchRecLike(String login_id, int rec_num) {
+		ResultSet rs = null;
+		PreparedStatement pstm = null;
+		RecLike reclike = null;
+		String sql = "select * from rec_liked where user_id=? and rec_num=?";
+		try {
+			pstm = conn.prepareStatement(sql);
+			pstm.setString(1,login_id);
+			pstm.setInt(2, rec_num);
+			rs = pstm.executeQuery();
+			if (rs.next()) {
+				String user_id = rs.getString("user_id");
+				reclike = new RecLike(user_id, rec_num);
+			}
+		pstm.close();
+		return reclike;	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return reclike;
+	}
+	
+	
+
 	// 로그인 userid로 recnum 리턴해주기
 	public int SearchLike(String user_id) {
 		  int rec = 0;
