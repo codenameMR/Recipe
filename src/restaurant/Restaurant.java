@@ -27,6 +27,13 @@ public class Restaurant {
 		public Restaurant(int res_num) {
 			this.res_num=res_num;
 		}
+		
+		public Restaurant(String title, String content, String loc) {
+			super();
+			this.title = title;
+			this.content = content;
+			this.loc = loc;
+		}
 
 		public Restaurant(int res_num, String user_id, String title, String content, String date, int views, int likes,
 				String picture1, String picture2, String picture3, String loc) {

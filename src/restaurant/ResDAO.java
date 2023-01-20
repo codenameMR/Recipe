@@ -139,8 +139,32 @@ public class ResDAO {
 	      return restaurant;
 	   }
 	
-	
-	
+	// 수정시 기존 글내용 불러오기
+	public Restaurant ReadRes(int res_num) {
+		Restaurant restaurant = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String SELECT_BY_RES_NUM = "SELECT title,content,loc FROM restaurant WHERE res_num = ? ";
+
+		try {
+			pstmt = conn.prepareStatement(SELECT_BY_RES_NUM);
+			pstmt.setInt(1, res_num);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+
+				String title = rs.getString("title");
+				String content = rs.getString("content");
+				String loc = rs.getString("loc");
+				restaurant = new Restaurant(title, content, loc);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return restaurant;
+
+	}
+	      
 	//글 작성
 	public int insertRes(Restaurant restaurant) {
 		int result = 0;

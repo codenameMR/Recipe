@@ -8,7 +8,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-   String user_id=(String)session.getAttribute("userId");
+	String user_id=(String)session.getAttribute("userId");
+	int res_num = Integer.parseInt(request.getParameter("res_num"));
+	Restaurant restaurant = ResDAO.getInstance().ReadRes(res_num);
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -16,9 +18,7 @@
  <title>게시판</title>
  </head>
  <body>
-<%
- 	int res_num = Integer.parseInt(request.getParameter("res_num"));
-%>
+
 <form name=modify method=post action="modify_ok.jsp?res_num=<%=res_num%>">
 
 <table>
@@ -29,11 +29,10 @@
       <td>수정</td>
     </table>
    <table>
-   
      <tr>
       <td>&nbsp;</td>
       <td align="center">제목</td>
-      <td><input name="title" size="50" maxlength="100" required></td>
+      <td><input name="title" size="50" maxlength="100" required value="<%=restaurant.getTitle() %>"></td>
       <td>&nbsp;</td>
      </tr>
       <tr height="1" bgcolor="#dddddd"><td colspan="4"></td></tr>
@@ -54,7 +53,7 @@
      <tr>
       <td>&nbsp;</td>
       <td align="center">내용</td>
-      <td><textarea name="content" cols="50" rows="13" required></textarea></td>
+      <td><textarea name="content" cols="50" rows="13" required ><%=restaurant.getContent() %></textarea></td>
       <td>&nbsp;</td>
      </tr>
      <tr height="1" bgcolor="#dddddd"><td colspan="4"></td></tr>
