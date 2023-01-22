@@ -29,7 +29,7 @@
 			if(session.getAttribute("userId")==null){ 
 		  %>
           <li class="nav-item">
-            <a class="nav-link" href="signUpNInForm.jsp">로그인/회원가입</a>
+            <a class="nav-link" href="/recipeteamPJ/signUpNInForm.jsp">로그인/회원가입</a>
           </li>
           
           <%
@@ -37,10 +37,10 @@
 			} else { 
 		  %>
 		  <li class="nav-item">
-            <a class="nav-link" href="logOut.jsp">로그아웃</a>
+            <a class="nav-link" href="/recipeteamPJ/logOut.jsp">로그아웃</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="myPage.jsp">내정보</a>
+            <a class="nav-link" href="/recipeteamPJ/myPage/myPage.jsp">내정보</a>
           </li>
 		  <%}%>	
         </ul>

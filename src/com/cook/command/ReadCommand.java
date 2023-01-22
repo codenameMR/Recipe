@@ -19,10 +19,11 @@ public class ReadCommand implements Command {
 
 		try {
 			recipe = RecipeDAO.getInstance().readRecipe(rec_num);
-			request.setAttribute("recipe", recipe);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		request.setAttribute("recipe", recipe);
 	}
 
 }

@@ -11,6 +11,6 @@
 <% } else { %>
 	<script>
 		alert("삭제 성공");
-		location.href = "recipeBoard.do";
+		history.back();
 	</script>
 <% } %>

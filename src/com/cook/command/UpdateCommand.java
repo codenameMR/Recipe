@@ -17,7 +17,8 @@ public class UpdateCommand implements Command{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String savePath = "D:/rec_storage";
+		//String savePath = "D:/rec_storage";
+		String savePath = "/Users/jack0/Desktop/Pictures/rec_storage";
 		int sizeLimit = 1024*1024*15;
 		MultipartRequest multi = new MultipartRequest(request, savePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
 		
@@ -71,7 +72,11 @@ public class UpdateCommand implements Command{
 		int result = 0;
 		if (rec_category!="") 
 		result = RecipeDAO.getInstance().updateRecipe(recipe);
-
+		
+		//마이페이지(내가 쓴 레시피글/좋아요한 레시피글)로 돌아가기
+		String prePage = multi.getParameter("prePage");
+		request.setAttribute("prePage", prePage);
+		
 		request.setAttribute("rec_num", rec_num);
 		request.setAttribute("recipe", recipe);
 		request.setAttribute("updateResult", result);

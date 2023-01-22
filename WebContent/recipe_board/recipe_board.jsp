@@ -137,15 +137,15 @@ table {
 		</table>
 		<br>
 		<%  HttpSession session = request.getSession();
-			if((String)session.getAttribute("userId")==null) {%>
+			if(session.getAttribute("userId")==null) {%>
 			<button type="button" onclick="signin()">글쓰기</button>
 		<%} else { %>
 			<button type="button" onclick="location.href='recipeWrite.do'">글쓰기</button>	
 		<%} %>
 		<br>
 		
+		<!-- 검색 -->
 		<div style="height:10px"></div>
-		
 		<form name="searchform" id="searchform">
 		<% if(search_word.equals("")) { %>
 			<input type=text placeholder="검색어 입력" name="search_word" required>
@@ -187,7 +187,7 @@ function signin() {
 }
 
 //---------------------recipe_board 관련 ajax-----------------------//
-//레시피 게시판  정렬
+//레시피 게시판 정렬
 function orderlist() {
 	var o = document.orderform;
 	//console.log("orderlist1")
@@ -202,7 +202,7 @@ function orderlist() {
 //레시피 게시판 검색 (post)
 function searchRec() {
 	//let sendData = "username="+$('input[name=username]').val();   //폼의 이름 값을 변수 안에 담아줌
-	let formData = $("#searchform").serialize();
+	var formData = $("#searchform").serialize();
 	//console.log(formData);
 		$.ajax({
 			url : 'recipelist.do',
@@ -215,7 +215,7 @@ function searchRec() {
 	}
 //레시피 게시판 검색후 정렬
 function orderlist2() {
-	let formData2 = $("#orderform2").serialize();
+	var formData2 = $("#orderform2").serialize();
 	//console.log("orderlist2");
 	//console.log(formData2);
 	$.ajax({

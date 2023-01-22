@@ -29,6 +29,13 @@ String rec_date = recipe.getRec_date();
 int rec_views = recipe.getRec_views();
 int rec_likes = recipe.getRec_likes();
 String rec_category = recipe.getRec_category();
+
+String prePage = "";
+if(request.getAttribute("prePage")!=null) {
+	prePage=(String)request.getAttribute("prePage");
+} 
+HttpSession session = request.getSession();
+String login_id = (String)session.getAttribute("userId");
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -58,11 +65,19 @@ String rec_category = recipe.getRec_category();
       <div class="col-lg-3"> <!-- 왼쪽 (게시판) -->
         <h1 class="my-4">게시판</h1>
         <div class="list-group">
+          <%if(prePage.equals("")) {%>
           <a href="recipeBoard.do" class="list-group-item">레시피 게시판</a>
           <a href="../restaurant/list.jsp" class="list-group-item">맛집 게시판</a>
           <a href="#" class="list-group-item">게시판3</a>
           <a href="#" class="list-group-item">게시판4</a>
           <a href="#" class="list-group-item">게시판5</a>
+          <%} else {%>
+          <a href="myPage.jsp" class="list-group-item">회원정보 수정</a>
+          <a href="myRecipeList.do?writer_id=<%=login_id%>" class="list-group-item">내가 쓴 레시피</a>
+          <a href="myRes.jsp" class="list-group-item">내가 쓴 맛집</a>
+          <a href="myRecipeLike.do?like_id<%=login_id%>" class="list-group-item">좋아요한 레시피</a>
+          <a href="myResLike.jsp" class="list-group-item">좋아요한 맛집</a>
+          <%} %>
         </div>
       </div> <!-- /.col-lg-3 왼쪽(게시판) 끝-->
       
@@ -72,6 +87,8 @@ String rec_category = recipe.getRec_category();
 		<hr>
 		<form name="frm" action="recipeUpdateOk.do" method="post"  enctype="multipart/form-data">
 			<input type="hidden" name="rec_num" value="<%=rec_num %>"/>
+			<input type="hidden" name="prePage" value="<%=prePage%>"/>
+			
 			<strong>제목 : </strong>
 			<input type="text" name="rec_title" value="<%=rec_title %>" required/><br>
 			<strong>글쓴이(id) : </strong> <%=user_id%><br>
@@ -114,7 +131,13 @@ String rec_category = recipe.getRec_category();
 		</form>
 		
 		<br><hr><br>
-		<button id="tolistBtn" onclick="location.href='recipeBoard.do'">목록으로</button>
+		<%if(prePage.equals("")) {%>
+		<button type="button" id="tolistBtn" onclick="location.href='recipeBoard.do'">목록으로</button>
+		<%} else if (prePage.equals("mylike")) {%>
+			<button type="button" onclick="location.href='myRecipeLike.do?like_id=<%=login_id%>'">목록으로</button>
+		<%} else if(prePage.equals("myrecipe")) {%>
+			<button type="button" onclick="location.href='myRecipeList.do?writer_id=<%=login_id%>'">목록으로</button>
+		<%} %>
 	
 	  </div> <!--/.col-lg-9 오른쪽(내용) 끝--> 	
       

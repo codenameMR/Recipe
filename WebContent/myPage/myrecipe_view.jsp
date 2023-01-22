@@ -23,7 +23,6 @@ if (recipe == null ) {
 }
 %>
 <%	String writer_id = recipe.getUser_id();
-
 	int rec_num = recipe.getRec_num();
 	String rec_title = recipe.getRec_title();
 	String rec_content = recipe.getRec_content();
@@ -44,6 +43,9 @@ if (recipe == null ) {
 	if (recipe.getRec_pic3() != null)
 	rec_pic3 = recipe.getRec_pic3().substring(length);
 	
+	String prePage = "";
+	if(request.getAttribute("prePage") != null)
+	prePage = (String)request.getAttribute("prePage");
 	//login_id와 rec_num을 좋아요 db에서 검색 
 	//결과가 null이면, 좋아요 버튼 보이기->좋아요버튼에서는 likedao에 좋아요 db추가 실행
 	//결과가 있으면, 좋아요취소 버튼 보이기->취소버튼에서는 likedao에서 좋아요 db삭제 실행
@@ -56,7 +58,7 @@ if (recipe == null ) {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>레시피공유-레공</title>
+  <title>레시피공유-마이페이지</title>
 	
   <!-- Bootstrap core CSS -->
   <link href="/recipeteamPJ/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -96,16 +98,16 @@ if (recipe == null ) {
       <div class="col-lg-3"> <!-- 왼쪽 (게시판) -->
         <h1 class="my-4">게시판</h1>
         <div class="list-group">
-          <a href="recipeBoard.do" class="list-group-item">레시피 게시판</a>
-          <a href="../restaurant/list.jsp" class="list-group-item">맛집 게시판</a>
-          <a href="#" class="list-group-item">게시판3</a>
-          <a href="#" class="list-group-item">게시판4</a>
-          <a href="#" class="list-group-item">게시판5</a>
+          <a href="myPage.jsp" class="list-group-item">회원정보 수정</a>
+          <a href="myRecipeList.do?writer_id=<%=login_id%>" class="list-group-item">내가 쓴 레시피</a>
+          <a href="myRes.jsp" class="list-group-item">내가 쓴 맛집</a>
+          <a href="myRecipeLike.do?like_id=<%=login_id%>" class="list-group-item">좋아요한 레시피</a>
+          <a href="myResLike.jsp" class="list-group-item">좋아요한 맛집</a>
         </div>
       </div> <!-- /.col-lg-3 왼쪽(게시판) 끝-->
       
 	  <div class="col-lg-9" id ="center_right"> <!-- 오른쪽(내용) -->
-			<div style="height: 20px"></div>
+			<div style="height:20px"></div>
 			<h2> <%=rec_title%> </h2>
 			<hr>
 			<strong>종류 : </strong> <%=rec_category%><br>
@@ -160,15 +162,19 @@ if (recipe == null ) {
 			</div>
 
 			<hr>
-			<form action="recipeBoard.do" style="display: inline">
-				<button type="submit" onclick="location.href='recipeBoard.do'">목록으로</button>
-			</form>
+			<%if (prePage.equals("mylike")) {%>
+			<button type="button" onclick="location.href='myRecipeLike.do?like_id=<%=login_id%>'">목록으로</button>
+			<%} else {%>
+			<button type="button" onclick="location.href='myRecipeList.do?writer_id=<%=login_id%>'">목록으로</button>
+			<%} %>
 
-			<%
-				if (login_id.equals(writer_id)) {
-			%>
-			<button type="button" onclick="location.href='recipeUpdate.do?rec_num=<%=rec_num%>'">수정하기</button>
-			<button type="button" onclick="location.href='recipeDelete.do'" style="display: inline">삭제하기</button>
+			<% if (login_id.equals(writer_id)) {
+					if (prePage.equals("mylike")) {   %>
+					<button type="button" onclick="location.href='recipeUpdate.do?rec_num=<%=rec_num%>&prePage=mylike'">수정하기</button>
+			<%		} else { %>
+					<button type="button" onclick="location.href='recipeUpdate.do?rec_num=<%=rec_num%>&prePage=myrecipe'">수정하기</button>
+			<%		} %>
+				<button type="button" onclick="location.href='recipeDelete.do'" style="display: inline">삭제하기</button>
 			<%
 				} else {
 			%>
@@ -176,11 +182,7 @@ if (recipe == null ) {
 			<button type="button" disabled>삭제하기</button>
 			<%} %>
 
-			<% if ( login_id.equals("") ) { %>
-			<button type="button" onclick="signin()">글쓰기</button>
-			<% } else { %>
-			<button type="button" onclick="location.href='recipeWrite.do'">글쓰기</button>
-			<% } %>
+		
 	   </div> <!--/.col-lg-9 오른쪽(내용) 끝--> 	
       
      </div> <!-- /.row 왼쪽,오른쪽 정렬 끝--> 
@@ -203,14 +205,11 @@ if (recipe == null ) {
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 	<script type="text/javascript">
-		function signin() {
-			alert("로그인이 필요한 기능입니다");
-		}
 		function like() {
 			let likeData = $("#likeform").serialize();
 			$('#likeNum').empty();
 				$.ajax({
-					url : 'recipe_board/rec_like.jsp',
+					url : '/recipeteamPJ/recipe_board/rec_like.jsp',
 					type : 'POST',
 					data : likeData,
 					success : function(data) {
@@ -232,7 +231,7 @@ if (recipe == null ) {
 			let likeData = $("#cancelLikeform").serialize();
 			$('#likeNum').empty();
 				$.ajax({
-					url : 'recipe_board/rec_cancel_like.jsp',
+					url : '/recipeteamPJ/recipe_board/rec_cancel_like.jsp',
 					type : 'POST',
 					data : likeData,
 					success : function(data) {

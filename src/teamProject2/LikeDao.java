@@ -198,7 +198,7 @@ public class LikeDao {
 	}
 
 	
-	//좋아요 누른 적 있나, 좋아요 DB검색 
+	//해당 글 좋아요 누른 적 있나, 좋아요 DB검색 
 	public RecLike searchRecLike(String login_id, int rec_num) {
 		ResultSet rs = null;
 		PreparedStatement pstm = null;
@@ -252,12 +252,12 @@ public class LikeDao {
 	
 	public List<Recipe> recLst;
 	// 좋아요 한 레시피 게시글 목록  (기본정렬 최신순)
-	public List<Recipe> selectLikeAll(String userId) {
+	public List<Recipe> myLike(String userId) {
 		List<Recipe> searchedLst = new ArrayList<>();
 			PreparedStatement pstmt = null; 
 			ResultSet rs = null;
 			try {
-				pstmt = conn.prepareStatement("select * from recipe_board where rec_num in (select rec_num from REC_LIKED where user_id = ?)");
+				pstmt = conn.prepareStatement("select * from recipe_board where rec_num in (select rec_num from REC_LIKED where user_id=?)");
 				pstmt.setString(1, userId); 
 				rs = pstmt.executeQuery();
 				while (rs.next()) {

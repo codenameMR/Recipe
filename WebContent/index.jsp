@@ -14,7 +14,7 @@ request.setCharacterEncoding("utf-8");
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>레시피공유-레공</title>
+  <title>레시피공유</title>
 	
   <!-- Bootstrap core CSS -->
   <link href="/recipeteamPJ/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -44,6 +44,7 @@ request.setCharacterEncoding("utf-8");
       </div> <!-- /.col-lg-3 왼쪽(게시판) 끝-->
       
 	  <div class="col-lg-9" id ="center_right"> <!-- 오른쪽(내용) --> 
+	  
 	  </div> <!--/.col-lg-9 오른쪽(내용) 끝--> 	
       
      </div> <!-- /.row 왼쪽,오른쪽 정렬 끝--> 
@@ -51,12 +52,11 @@ request.setCharacterEncoding("utf-8");
   </div>
   <!-- /.container 중앙 끝 -->
 	
-  <!-- Footer 하단-->
+  <!-- Footer 하단--> 
   <footer class="py-5 bg-dark">
     <div class="container">
       <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
     </div>
-    <!-- /.container 하단 끝 -->
   </footer>
 
   <!-- Bootstrap core JavaScript -->

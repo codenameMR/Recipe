@@ -70,11 +70,13 @@ public class RecipeController extends HttpServlet {
 			viewPage = "/recipe_board/recipe_write.jsp";
 			break;
 		case "/recipeUpdate.do":
+		case "/myPage/recipeUpdate.do":
 			command = new SelectCommand();
 			command.execute(request, response);
 			viewPage = "/recipe_board/recipe_updateform.jsp";
 			break;
 		case "/recipeUpdateOk.do":
+		case "/myPage/recipeUpdateOk.do":	
 			command = new UpdateCommand();
 			command.execute(request, response);
 			viewPage = "/recipe_board/recipe_update.jsp";
@@ -84,6 +86,33 @@ public class RecipeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "/recipe_board/recipe_delete.jsp";
 			break;
+			
+		case "/myPage/myRecipeList.do":
+			command = new MyRecipeCommand();
+			command.execute(request, response);
+			viewPage = "/myPage/myrecipe_list.jsp";
+			break;
+		case "/myPage/myRecipeListOrder.do":
+			command = new MyRecipeCommand();
+			command.execute(request, response);
+			viewPage = "/myPage/myrecipe_list_order.jsp";
+			break;
+		case "/myPage/myRecipeLike.do":
+			command = new MyRecipeLikeCommand();
+			command.execute(request, response);
+			viewPage = "/myPage/myrecipe_like.jsp";
+			break;
+		case "/myPage/myRecipeLikeOrder.do":
+			command = new MyRecipeLikeCommand();
+			command.execute(request, response);
+			viewPage = "/myPage/myrecipe_like_order.jsp";
+			break;		
+		case "/myPage/myRecipeView.do":
+			command = new MyReadCommand();
+			command.execute(request, response);
+			viewPage = "/myPage/myrecipe_view.jsp";
+			break;
+			
 		}
 
 		// view page로 forward
