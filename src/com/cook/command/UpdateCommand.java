@@ -17,8 +17,7 @@ public class UpdateCommand implements Command{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		//String savePath = "D:/rec_storage";
-		String savePath = "/Users/jack0/Desktop/Pictures/rec_storage";
+		String savePath = "D:/rec_storage";
 		int sizeLimit = 1024*1024*15;
 		MultipartRequest multi = new MultipartRequest(request, savePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
 		

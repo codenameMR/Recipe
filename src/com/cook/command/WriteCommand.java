@@ -19,8 +19,7 @@ public class WriteCommand implements Command {
 		//(1)String savePath = "C:/JavaProgramming/source/projectName/WebContent/storage";
 		//(2)String savePath = request.getServletContext().getRealPath("storage");
 		//(3)
-		//String savePath = "D:/rec_storage";
-		String savePath = "/Users/jack0/Desktop/Pictures/rec_storage";
+		String savePath = "D:/rec_storage";
 		
 		// 파일 크기 15MB로 제한
 		int sizeLimit = 1024*1024*15;

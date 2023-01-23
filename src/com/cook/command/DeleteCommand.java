@@ -19,13 +19,16 @@ public class DeleteCommand implements Command {
 		File rec_file1;
 		File rec_file2;
 		File rec_file3;
+		
 		Recipe recipe = RecipeDAO.getInstance().selectRecipe(rec_num);
 		int resultRec = RecipeDAO.getInstance().deleteRecipe(rec_num);
 		int resultLike = LikeDao.getInstance().DeleteRecAll(rec_num);
-		boolean result = resultRec > 0 && resultLike > 0;
+		String prePage = "";
+		if (request.getParameter("prePage") != null)
+		prePage=request.getParameter("prePage");
 		
 		// D:/rec_storage에서 이미지 파일 삭제
-		if (result) {
+		if (resultRec > 0) {
 			if (recipe.getRec_pic1() != null){
 				rec_file1 = new File(recipe.getRec_pic1()); 
 				rec_file1.delete();
@@ -40,9 +43,8 @@ public class DeleteCommand implements Command {
 			}
 		}		
 		
-		
-		request.setAttribute("delResult", result);
-		
+		request.setAttribute("delResult", resultRec);
+		request.setAttribute("prePage", prePage);
 	}
 
 }

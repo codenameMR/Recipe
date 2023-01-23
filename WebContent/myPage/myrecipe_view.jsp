@@ -34,7 +34,7 @@ if (recipe == null ) {
 	String rec_pic1 = "";
 	String rec_pic2 = "";
 	String rec_pic3 = "";
-	String savePath = "/Users/jack0/Desktop/Pictures/rec_storage";
+	String savePath = "D:/rec_storage";
 	int length = savePath.length();
 	if (recipe.getRec_pic1() != null)
 	rec_pic1 = recipe.getRec_pic1().substring(length);
@@ -171,12 +171,12 @@ if (recipe == null ) {
 			<% if (login_id.equals(writer_id)) {
 					if (prePage.equals("mylike")) {   %>
 					<button type="button" onclick="location.href='recipeUpdate.do?rec_num=<%=rec_num%>&prePage=mylike'">수정하기</button>
+					<button type="button" onclick="location.href='recipeDelete.do?rec_num=<%=rec_num%>&prePage=mylike'" style="display: inline">삭제하기</button>
 			<%		} else { %>
 					<button type="button" onclick="location.href='recipeUpdate.do?rec_num=<%=rec_num%>&prePage=myrecipe'">수정하기</button>
-			<%		} %>
-				<button type="button" onclick="location.href='recipeDelete.do'" style="display: inline">삭제하기</button>
-			<%
-				} else {
+					<button type="button" onclick="location.href='recipeDelete.do?rec_num=<%=rec_num%>&prePage=myrecipe'" style="display: inline">삭제하기</button>
+			<%		} 
+			   } else {
 			%>
 			<button type="button" disabled>수정하기</button>
 			<button type="button" disabled>삭제하기</button>

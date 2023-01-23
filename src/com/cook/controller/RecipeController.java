@@ -46,21 +46,33 @@ public class RecipeController extends HttpServlet {
 		
 		
 		switch (com) {
+		//레시피게시판, 목록으로 클릭 시 (1페이지로)
 		case "/recipeBoard.do":
 			command = new ListCommand();
 			command.execute(request, response);
 			viewPage = "/recipe_board/recipe_board.jsp";
 			break;
+		//정렬, 검색시 (1페이지로) 
 		case "/recipelist.do":
 			command = new ListCommand();
 			command.execute(request, response);
-			viewPage = "/recipe_board/recipe_list.jsp";
-			break;	
+			viewPage = "/recipe_board/recipe_list.jsp"; //ajax로 사용 
+			break;
+		//다른 페이지 클릭시
+		case "/recipePage.do":
+			command = new ListCommand();
+			command.execute(request, response);
+			viewPage = "/recipe_board/recipe_board.jsp";  
+			break;
+		
+		//게시글 1개 조회 
 		case "/recipeView.do":
 		    command = new ReadCommand();
 		    command.execute(request, response);
 		    viewPage = "/recipe_board/recipe_view.jsp";
 		    break;
+		 
+		//글쓰기 
 		case "/recipeWrite.do":
 			viewPage = "/recipe_board/recipe_writeform.jsp";
 			break;
@@ -69,6 +81,8 @@ public class RecipeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "/recipe_board/recipe_write.jsp";
 			break;
+		
+		//글 수정 
 		case "/recipeUpdate.do":
 		case "/myPage/recipeUpdate.do":
 			command = new SelectCommand();
@@ -81,12 +95,15 @@ public class RecipeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "/recipe_board/recipe_update.jsp";
 			break;
+		//글 삭제 	
 		case "/recipeDelete.do":
+		case "/myPage/recipeDelete.do":		
 			command = new DeleteCommand();
 			command.execute(request, response);
 			viewPage = "/recipe_board/recipe_delete.jsp";
 			break;
-			
+		
+		//마이페이지 
 		case "/myPage/myRecipeList.do":
 			command = new MyRecipeCommand();
 			command.execute(request, response);

@@ -149,32 +149,31 @@ public class RecipeDAO {
 		return recLst;
 	}
 
-	// 레시피 게시글 목록  정렬
+	// 레시피 게시글 목록 정렬
 	public List<Recipe> selectAllByOrder(int num, List<Recipe> lst) {
-		List<Recipe>lst2 = new ArrayList<>();
+		List<Recipe> lstByOrder = new ArrayList<>();
 		switch (num) {
 		case 0: // 기본 최신순
 			return lst;
 		case 1: // 오래된 순
 			lst.stream()
 			.sorted(Comparator.comparing(Recipe::getRec_num))
-			.forEach(n->lst2.add(n));
+			.forEach(n->lstByOrder.add(n));
 
-			return lst2;
+			return lstByOrder;
 		case 2: // 조회순
 			lst.stream()
 			.sorted(Comparator.comparing(Recipe::getRec_views).reversed())
-			.forEach(n->lst2.add(n));
-			return lst2;
+			.forEach(n->lstByOrder.add(n));
+			return lstByOrder;
 		case 3: // 좋아요순
 			lst.stream()
 			.sorted(Comparator.comparing(Recipe::getRec_likes).reversed())
-			.forEach(n->lst2.add(n));
-			return lst2;
+			.forEach(n->lstByOrder.add(n));
+			return lstByOrder;
 		}
-		return lst2;
+		return lstByOrder;
 	}
-	
 	
 	//레시피 게시글 조회(조회수 증가)
 	//만약 글을 읽으려 할 때 모종의 이유로 인해 불러와지지 않는 경우 조회수 증가도 되면 안 될 것입니다.
@@ -252,6 +251,11 @@ public class RecipeDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			try {
+				conn.setAutoCommit(true);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 			closeAll(pstmt, rs);
 		}
 		return recipe;
@@ -280,7 +284,6 @@ public class RecipeDAO {
 		}
 		return result;
 	}
-	
 	
 	//레시피 게시글 삭제
 	public int deleteRecipe(int rec_num) {
@@ -414,39 +417,79 @@ public class RecipeDAO {
 	}
 	
 	//myPage > 내가 쓴 레시피 글 보기
-		public List<Recipe> myRecipe(String login_id) {
-			List<Recipe> myRecipes = new ArrayList<>();
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			try {
-				String sql = "SELECT * FROM  recipe_board WHERE user_id=? order by rec_num desc";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, login_id);
-				rs = pstmt.executeQuery();
-				while (rs.next()) {
-					int result_rec_num = rs.getInt("rec_num");
-					String user_id = rs.getString("user_id");
-					String rec_title = rs.getString("rec_title");
-					String rec_content = rs.getString("rec_content");
-					String rec_date = rs.getString("rec_date");
-					int rec_views = rs.getInt("rec_views");
-					int rec_likes = rs.getInt("rec_likes");
-					String rec_category = rs.getString("rec_category");
-					String rec_pic1 = rs.getString("rec_pic1");
-					String rec_pic2 = rs.getString("rec_pic2");
-					String rec_pic3 = rs.getString("rec_pic3");
-					Recipe recipe = new Recipe(result_rec_num, user_id, rec_title, rec_content, rec_date, rec_views,
-							rec_likes, rec_category, rec_pic1, rec_pic2, rec_pic3);
-					myRecipes.add(recipe);
-				}
-				return myRecipes;
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				closeAll(pstmt, rs);
+	public List<Recipe> myRecipe(String login_id) {
+		List<Recipe> myRecipes = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT * FROM  recipe_board WHERE user_id=? order by rec_num desc";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, login_id);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				int result_rec_num = rs.getInt("rec_num");
+				String user_id = rs.getString("user_id");
+				String rec_title = rs.getString("rec_title");
+				String rec_content = rs.getString("rec_content");
+				String rec_date = rs.getString("rec_date");
+				int rec_views = rs.getInt("rec_views");
+				int rec_likes = rs.getInt("rec_likes");
+				String rec_category = rs.getString("rec_category");
+				String rec_pic1 = rs.getString("rec_pic1");
+				String rec_pic2 = rs.getString("rec_pic2");
+				String rec_pic3 = rs.getString("rec_pic3");
+				Recipe recipe = new Recipe(result_rec_num, user_id, rec_title, rec_content, rec_date, rec_views,
+						rec_likes, rec_category, rec_pic1, rec_pic2, rec_pic3);
+				myRecipes.add(recipe);
 			}
 			return myRecipes;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(pstmt, rs);
 		}
+		return myRecipes;
+	}
+	
+	
+	//레시피 게시글 페이징
+	public List<Recipe> selectRecipeByPage(int startData, int endData, List<Recipe> lst) {
+		List<Recipe> lstByPage = new ArrayList<>();
+		for (int i = startData; i <= endData ; i++) {
+			if (lst.size() >= i) //IndexOutOfBoundsException 방지  
+			lstByPage.add(lst.get(i-1));
+		}
+		return lstByPage;
+	}
+	
+	public int getCountRows(List<Recipe> lst) {
+		 int count = 0;
+		 count = lst.size();
+		 return count;
+	}
+	
+	//페이징 처리위한 게시판 글 총 개수 구하기 
+//	public int getTotalRows() {
+//	    int count = 0;
+//	    PreparedStatement pstmt = null;
+//	    ResultSet rs = null;
+//	    try {
+//	        StringBuffer sql = new StringBuffer();
+//	        sql.append("SELECT COUNT(rec_num) FROM RECIPE_BOARD");
+//	        pstmt = conn.prepareStatement(sql.toString());
+//	        rs = pstmt.executeQuery();
+//	        int index = 0;
+//	        if (rs.next()) {
+//	            count = rs.getInt(++index);
+//	        }
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    } finally {
+//	      closeAll(pstmt, rs);
+//	    }
+//	    return count;
+//	}
+
 	
 //	public static void main(String[] args) {
 //		RecipeDAO recipeDao = RecipeDAO.getInstance();

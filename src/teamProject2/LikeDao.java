@@ -140,18 +140,17 @@ public class LikeDao {
 	
 	//레시피 게시글 삭제시, 해당 글 좋아요 모두 삭제
 	public int DeleteRecAll(int rec_num) {
-			String sql ="DELETE FROM rec_liked WHERE REC_NUM = ?";
-			try {
-				PreparedStatement pstm = conn.prepareStatement(sql);
-				pstm.setInt(2, rec_num);
-				int result = pstm.executeUpdate();
-				pstm.close();
-				return result;
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return 0;
+		int result = 0;
+		String sql = "DELETE FROM rec_liked WHERE rec_num = ?";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, rec_num);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			closeAll(pstmt);
+		}
+		return result;
 	}
 	
 	

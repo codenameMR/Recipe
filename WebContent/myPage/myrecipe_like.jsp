@@ -18,6 +18,15 @@ int order = 0;
 if (request.getAttribute("order") != null) {
 	order = (Integer) request.getAttribute("order");
 }
+
+//페이징 처리 
+int startPage = (Integer)request.getAttribute("startPage");
+int endPage = (Integer)request.getAttribute("endPage");
+int totalPages = (Integer)request.getAttribute("totalPages");
+int tempPage = 1;
+if (request.getAttribute("tempPage")!=null) {
+	tempPage = (Integer)request.getAttribute("tempPage");
+}
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -70,42 +79,54 @@ if (request.getAttribute("order") != null) {
       </div> <!-- /.col-lg-3 왼쪽(게시판) 끝-->
       
 	  <div class="col-lg-9" id ="center_right"> <!-- 오른쪽(내용) --> 
-	  	<div style="height:20px"></div>
-	  	<%if(myLikeRecList !=null) { %>
+	  		<div style="height:20px"></div>
 	  		<h1>좋아요한 레시피</h1>
-	  		<hr> 
-	  		<label>정렬하기</label>
-	  		<form id="orderform" name="orderform">
-	  			<input type="hidden" name="like_id" value="<%=userId%>">
-	    		<select onchange="orderlist()" name="order"> 
-		 	 	<%for(int i = 0; i < order_name.length; i++) { 
-	    			if (i == order) {  %> 
-	       				<option value="<%=i%>" selected><%=order_name[i]%></option> 
-	         		<% } else { %>
-	    				<option value="<%=i%>" ><%=order_name[i]%> </option>  	
-	    			<%} 
-	      		 } %>
-	      	 	</select>
-      		</form>
-      	<%} %>	
+	  		<hr> <br>
+	  		<div class="d-flex justify-content-end"> 
+			   		<label>정렬하기&nbsp;&nbsp;</label>
+		  		<form id="orderform" name="orderform">
+		  			<input type="hidden" name="like_id" value="<%=userId%>">
+		    		<select onchange="orderlist()" name="order"> 
+			 	 	<%for(int i = 0; i < order_name.length; i++) { 
+		    			if (i == order) {  %> 
+		       				<option value="<%=i%>" selected><%=order_name[i]%></option> 
+		         		<% } else { %>
+		    				<option value="<%=i%>" ><%=order_name[i]%> </option>  	
+		    			<%} 
+		      		 } %>
+		      	 	</select>
+	      		</form>
+      		</div>
       		
       		<br>
-		  	<table>
-			<tr>
-				<th>게시글 번호</th>
-				<th>제목</th>
-				<th>글쓴이</th>
-				<th>조회수</th>
-				<th>좋아요수</th>
-				<th>카테고리</th>
-				<th>등록일</th>
-			</tr>
+		  	<table class="table">
+			  	<colgroup>
+						<!-- <col width="5%"> -->
+						<col width="45%">
+						<col width="12%">
+						<col width="7%">
+						<col width="7%">
+						<col width="7%">
+						<col width="18%">
+				</colgroup>
+				<thead class="thead-light">
+						<tr>
+							<!-- <th scope="col">게시글 번호</th> -->
+							<th scope="col">제목</th>
+							<th scope="col">글쓴이</th>
+							<th scope="col">조회수</th>
+							<th scope="col">좋아요수</th>
+							<th scope="col">카테고리</th>
+							<th scope="col">등록일</th>
+						</tr>
+					</thead>
 			<%
 			if (myLikeRecList != null) {
 				for (Recipe recipe : myLikeRecList) {
 			%>
+			<tbody>
 			<tr>
-				<td><%=recipe.getRec_num()%></td>
+				<%-- <td><%=recipe.getRec_num()%></td> --%>
 				<td>
 				<a href="myRecipeView.do?rec_num=<%=recipe.getRec_num()%>&prePage=mylike"><%=recipe.getRec_title()%></a></td>
 				<td><%=recipe.getUser_id()%></td>
@@ -116,8 +137,53 @@ if (request.getAttribute("order") != null) {
 			</tr>
 			<%
 				}
-			} 
+			} else {
 			%>
+			<tr><td colspan="6">데이터가 존재하지 않습니다.</td></tr>
+			<%}%>
+			</tbody>
+		</table>
+		
+		<nav aria-label="Page navigation">
+		  <ul class="pagination justify-content-center">
+		      <% if (startPage == 1) {%>
+			      <li class="page-item disabled"><a class="page-link" href="#"
+			          tabindex="-1" aria-disabled="true">Previous</a></li>
+		      <% } else {%>
+			      <li class="page-item"><a class="page-link" href="javascript:goPage('<%=userId%>','<%=order%>','<%=startPage - 1%>')"
+			          tabindex="-1"
+			          aria-disabled="true">Previous</a></li>
+		      <% }%>
+		      
+		      <% for (int i = startPage; i <= endPage; i++) {%>
+			      <%if (tempPage == i) { %>
+				      <li class="page-item active">
+					      <a class="page-link" href="javascript:goPage('<%=userId%>','<%=order%>','<%=i%>')"
+					      ><%=i%></a>
+					  </li>
+			      <%} else { %>
+				      <li class="page-item">
+					      <a class="page-link" href="javascript:goPage('<%=userId%>','<%=order%>','<%=i%>')"
+					      ><%=i%></a>
+					  </li>
+			      <%} 
+		       } %>
+		      
+		      <%  // 마지막 페이지 숫자와 startPage에서 pageLength 더해준 값이 일치할 때
+		          // (즉 마지막 페이지 블럭일 때)
+		          if (totalPages == endPage) {
+		      %>
+		      	<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+		      <% } else {%>
+			  	<li class="page-item">
+			    	<a class="page-link" 
+			    	href="javascript:goPage('<%=userId%>','<%=order%>','<%=endPage + 1%>')">Next</a>
+			    </li>
+		      <% }%>
+		  </ul>
+		</nav>		
+		
+		
 	  </div> <!--/.col-lg-9 오른쪽(내용) 끝--> 	
       
      </div> <!-- /.row 왼쪽,오른쪽 정렬 끝--> 
@@ -144,6 +210,37 @@ function orderlist() {
 			$('#center_right').html(data);
 		}
 	});
+}
+
+function goPage(userId, order, tempPage){
+    let pageForm = document.createElement('form');
+    
+    let obj_order;
+    obj_order = document.createElement('input');
+    obj_order.setAttribute('type', 'hidden');
+    obj_order.setAttribute('name', 'order');
+    obj_order.setAttribute('value', order);
+    
+    let obj_page;
+    obj_page = document.createElement('input');
+    obj_page.setAttribute('type', 'hidden');
+    obj_page.setAttribute('name', 'tempPage');
+    obj_page.setAttribute('value', tempPage);
+    
+    let obj_id;
+    obj_id = document.createElement('input');
+    obj_id.setAttribute('type', 'hidden');
+    obj_id.setAttribute('name', 'like_id');
+    obj_id.setAttribute('value', userId);
+    
+    pageForm.appendChild(obj_order);
+    pageForm.appendChild(obj_page);
+    pageForm.appendChild(obj_id);
+    
+    pageForm.setAttribute('method', 'post');
+    pageForm.setAttribute('action', 'myRecipeLike.do');
+    document.body.appendChild(pageForm);
+    pageForm.submit();
 }
 </script>
 </html>

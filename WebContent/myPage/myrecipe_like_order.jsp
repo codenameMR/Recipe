@@ -18,6 +18,15 @@ int order = 0;
 if (request.getAttribute("order") != null) {
 	order = (Integer)request.getAttribute("order");
 }
+
+//페이징 처리 
+int startPage = (Integer)request.getAttribute("startPage");
+int endPage = (Integer)request.getAttribute("endPage");
+int totalPages = (Integer)request.getAttribute("totalPages");
+int tempPage = 1;
+if (request.getAttribute("tempPage")!=null) {
+	tempPage = (Integer)request.getAttribute("tempPage");
+}
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -35,57 +44,111 @@ if (request.getAttribute("order") != null) {
 	table {
 		width: 100%;
 	}
-	label{
-	font-size: 30px;
-	}
   </style>
 </head>
 
 <body>
 	  	<div style="height:20px"></div>
 	  		<h1>좋아요한 레시피</h1>
-	  		<hr> 
-	  		<label>정렬하기</label>
-	  		<form id="orderform" name="orderform">
-	  			<input type="hidden" name="like_id" value="<%=userId%>">
-	    		<select onchange="orderlist()" name="order"> 
-		 	 	<%for(int i = 0; i < order_name.length; i++) { 
-	    			if (i == order) {  %> 
-	       				<option value="<%=i%>" selected><%=order_name[i]%></option> 
-	         		<% } else { %>
-	    				<option value="<%=i%>"><%=order_name[i]%> </option>  	
-	    			<%} 
-	      		 } %>
-	      	 	</select>
-      		</form>	
-      	
+	  		<hr> <br>
+	  		<div class="d-flex justify-content-end"> 
+			   	<label>정렬하기&nbsp;&nbsp;</label>
+		  		<form id="orderform" name="orderform">
+		  			<input type="hidden" name="like_id" value="<%=userId%>">
+		    		<select onchange="orderlist()" name="order"> 
+			 	 	<%for(int i = 0; i < order_name.length; i++) { 
+		    			if (i == order) {  %> 
+		       				<option value="<%=i%>" selected><%=order_name[i]%></option> 
+		         		<% } else { %>
+		    				<option value="<%=i%>"><%=order_name[i]%> </option>  	
+		    			<%} 
+		      		 } %>
+		      	 	</select>
+	      		</form>	
+      		</div>
+      		
       		<br>
-		  	<table>
-			<tr>
-				<th>게시글 번호</th>
-				<th>제목</th>
-				<th>글쓴이</th>
-				<th>조회수</th>
-				<th>좋아요수</th>
-				<th>카테고리</th>
-				<th>등록일</th>
-			</tr>
-			<%
-			if (viewList != null) {
-				for (Recipe recipe : viewList) {
-			%>
-			<tr>
-				<td><%=recipe.getRec_num()%></td>
-				<td><a href="myRecipeView.do?rec_num=<%=recipe.getRec_num()%>&prePage=mylike"><%=recipe.getRec_title()%></a></td>
-				<td><%=recipe.getUser_id()%></td>
-				<td><%=recipe.getRec_views()%></td>
-				<td><%=recipe.getRec_likes()%></td>
-				<td><%=recipe.getRec_category()%></td>
-				<td><%=recipe.getRec_date()%></td>
-			</tr>
-			<%
-				}
-			} 
-			%>
+		  	<table class="table">
+				<colgroup>
+					<!-- <col width="5%"> -->
+					<col width="45%">
+					<col width="12%">
+					<col width="7%">
+					<col width="7%">
+					<col width="7%">
+					<col width="18%">
+				</colgroup>
+				<thead class="thead-light">
+					<tr>
+						<!-- <th scope="col">게시글 번호</th> -->
+						<th scope="col">제목</th>
+						<th scope="col">글쓴이</th>
+						<th scope="col">조회수</th>
+						<th scope="col">좋아요수</th>
+						<th scope="col">카테고리</th>
+						<th scope="col">등록일</th>
+					</tr>
+				</thead>
+				<%
+				if (viewList != null) {
+					for (Recipe recipe : viewList) {
+				%>
+				<tbody>
+				<tr>
+					<%-- <td><%=recipe.getRec_num()%></td> --%>
+					<td><a href="myRecipeView.do?rec_num=<%=recipe.getRec_num()%>&prePage=mylike"><%=recipe.getRec_title()%></a></td>
+					<td><%=recipe.getUser_id()%></td>
+					<td><%=recipe.getRec_views()%></td>
+					<td><%=recipe.getRec_likes()%></td>
+					<td><%=recipe.getRec_category()%></td>
+					<td><%=recipe.getRec_date()%></td>
+				</tr>
+				<%
+					}
+				} else {
+					%>
+					<tr><td colspan="6">데이터가 존재하지 않습니다.</td></tr>
+			 	 <% } %>
+					</tbody>
+				</table>
+				
+				<nav aria-label="Page navigation">
+				  <ul class="pagination justify-content-center">
+				      <% if (startPage == 1) {%>
+					      <li class="page-item disabled"><a class="page-link" href="#"
+					          tabindex="-1" aria-disabled="true">Previous</a></li>
+				      <% } else {%>
+					      <li class="page-item"><a class="page-link" href="javascript:goPage('<%=userId%>','<%=order%>','<%=startPage - 1%>')"
+					          tabindex="-1"
+					          aria-disabled="true">Previous</a></li>
+				      <% }%>
+				      
+				      <% for (int i = startPage; i <= endPage; i++) {%>
+					      <%if (tempPage == i) { %>
+						      <li class="page-item active">
+							      <a class="page-link" href="javascript:goPage('<%=userId%>','<%=order%>','<%=i%>')"
+							      ><%=i%></a>
+							  </li>
+					      <%} else { %>
+						      <li class="page-item">
+							      <a class="page-link" href="javascript:goPage('<%=userId%>','<%=order%>','<%=i%>')"
+							      ><%=i%></a>
+							  </li>
+					      <%} 
+				       } %>
+				      
+				      <%  // 마지막 페이지 숫자와 startPage에서 pageLength 더해준 값이 일치할 때
+				          // (즉 마지막 페이지 블럭일 때)
+				          if (totalPages == endPage) {
+				      %>
+				      	<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+				      <% } else { %>
+					  	 <li class="page-item">
+					    	<a class="page-link" 
+					    	href="javascript:goPage('<%=userId%>','<%=order%>','<%=endPage + 1%>')">Next</a>
+					    </li>
+				     <% } %>
+				 </ul>
+			</nav>				
 </body>
 </html>
