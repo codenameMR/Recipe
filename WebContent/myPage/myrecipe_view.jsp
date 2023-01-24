@@ -87,23 +87,14 @@ if (recipe == null ) {
 
 <body>
   <!-- 상단 Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <jsp:include page="../header.jsp" />
-  </nav>
 
   <!-- 중앙 Page Content -->
-  <div class="container" id="center" style="height:1200px">
+  <div class="container" id="center" style="height:1500px; padding-top:10px;">
     <div class="row"> <!-- 왼쪽(게시판)과 오른쪽(내용) 정렬 -->
 	
       <div class="col-lg-3"> <!-- 왼쪽 (게시판) -->
-        <h1 class="my-4">게시판</h1>
-        <div class="list-group">
-          <a href="myPage.jsp" class="list-group-item">회원정보 수정</a>
-          <a href="myRecipeList.do?writer_id=<%=login_id%>" class="list-group-item">내가 쓴 레시피</a>
-          <a href="myRes.jsp" class="list-group-item">내가 쓴 맛집</a>
-          <a href="myRecipeLike.do?like_id=<%=login_id%>" class="list-group-item">좋아요한 레시피</a>
-          <a href="myResLike.jsp" class="list-group-item">좋아요한 맛집</a>
-        </div>
+       <jsp:include page="../board.jsp" />
       </div> <!-- /.col-lg-3 왼쪽(게시판) 끝-->
       
 	  <div class="col-lg-9" id ="center_right"> <!-- 오른쪽(내용) -->
@@ -171,7 +162,7 @@ if (recipe == null ) {
 			<% if (login_id.equals(writer_id)) {
 					if (prePage.equals("mylike")) {   %>
 					<button type="button" onclick="location.href='recipeUpdate.do?rec_num=<%=rec_num%>&prePage=mylike'">수정하기</button>
-					<button type="button" onclick="location.href='recipeDelete.do?rec_num=<%=rec_num%>&prePage=mylike'" style="display: inline">삭제하기</button>
+					<button type="button" onclick="chkDelete(<%=rec_num%>)" style="display: inline">삭제하기</button>
 			<%		} else { %>
 					<button type="button" onclick="location.href='recipeUpdate.do?rec_num=<%=rec_num%>&prePage=myrecipe'">수정하기</button>
 					<button type="button" onclick="location.href='recipeDelete.do?rec_num=<%=rec_num%>&prePage=myrecipe'" style="display: inline">삭제하기</button>
@@ -205,6 +196,13 @@ if (recipe == null ) {
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 	<script type="text/javascript">
+    function chkDelete(rec_num) {
+    	let ok = confirm("해당 글을 삭제하시겠습니까?");
+        if (ok) {
+        	location.href= "recipeDelete.do?rec_num="+rec_num+"&prePage=mylike"
+        }
+    }
+	
 		function like() {
 			let likeData = $("#likeform").serialize();
 			$('#likeNum').empty();

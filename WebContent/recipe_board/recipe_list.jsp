@@ -50,6 +50,21 @@ table, th, td {
 table {
 	width: 100%;
 }
+table a {
+ color:orangered;
+}
+.my.page-link {
+	color:coral;
+}
+.my.pagination > .active > a, 
+.my.pagination > .active > span, 
+.my.pagination > .active > a:hover, 
+.my.pagination > .active > span:hover, 
+.my.pagination > .active > a:focus, 
+.my.pagination > .active > span:focus {
+  background: coral;
+  border-color: coral;
+}
 </style>
 </head>
 
@@ -119,7 +134,7 @@ table {
 		<tbody>
 			<tr>
 				<%-- <td><%=recipe.getRec_num()%></td> --%>
-				<td><a href="javascript:void(0)" onclick="view(<%=recipe.getRec_num()%>)"><%=recipe.getRec_title()%></a></td>
+				<td><a href="recipeView.do?rec_num=<%=recipe.getRec_num()%>"><%=recipe.getRec_title()%></a></td>
 				<td><%=recipe.getUser_id()%></td>
 				<td><%=recipe.getRec_views()%></td>
 				<td><%=recipe.getRec_likes()%></td>
@@ -144,12 +159,12 @@ table {
 	<br>
 	
 	<nav aria-label="Page navigation">
-	  <ul class="pagination justify-content-center">
+	  <ul class="pagination justify-content-center my">
 	      <% if (startPage == 1) {%>
 		      <li class="page-item disabled"><a class="page-link" href="#"
 		          tabindex="-1" aria-disabled="true">Previous</a></li>
 	      <% } else {%>
-		      <li class="page-item"><a class="page-link" href="javascript:goPage('<%=search_class%>','<%=search_word%>','<%=order%>','<%=startPage - 1%>')"
+		      <li class="page-item"><a class="page-link my" href="javascript:goPage('<%=search_class%>','<%=search_word%>','<%=order%>','<%=startPage - 1%>')"
 		          tabindex="-1"
 		          aria-disabled="true">Previous</a></li>
 	      <% }%>
@@ -162,7 +177,7 @@ table {
 				  </li>
 		      <%} else { %>
 			      <li class="page-item">
-				      <a class="page-link" href="javascript:goPage('<%=search_class%>','<%=search_word%>','<%=order%>','<%=i%>')"
+				      <a class="page-link my" href="javascript:goPage('<%=search_class%>','<%=search_word%>','<%=order%>','<%=i%>')"
 				      ><%=i%></a>
 				  </li>
 		      <%} 
@@ -175,7 +190,7 @@ table {
 	      	<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
 	      <% } else {%>
 		  	<li class="page-item">
-		    	<a class="page-link" 
+		    	<a class="page-link my" 
 		    	href="javascript:goPage('<%=search_class%>','<%=search_word%>','<%=order%>','<%=endPage + 1%>')">Next</a>
 		    </li>
 	      <% }%>

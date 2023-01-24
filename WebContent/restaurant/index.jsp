@@ -28,14 +28,14 @@ request.setCharacterEncoding("utf-8");
 
 <body style="padding-top: 0px; font-family: 'Noto Sans KR', sans-serif;">
   <!-- 상단 Navigation -->
-  <jsp:include page="header.jsp" />
+  <jsp:include page="../header.jsp" />
 
   <!-- 중앙 Page Content -->
-  <div class="container" id="center" style="height:1500px; padding-top:10px;">
+  <div class="container" id="center" style="height:1500px; padding-top:20px;">
     <div class="row"> <!-- 왼쪽(게시판)과 오른쪽(내용) 정렬 -->
 	
       <div class="col-lg-3"> <!-- 왼쪽 (게시판) -->
-      	<jsp:include page="board.jsp" />
+      	<jsp:include page="../board.jsp" />
       </div> <!-- /.col-lg-3 왼쪽(게시판) 끝-->
       
 	  <div class="col-lg-9" id ="center_right"> <!-- 오른쪽(내용) --> 

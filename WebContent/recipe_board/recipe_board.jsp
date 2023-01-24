@@ -48,9 +48,10 @@ if (request.getAttribute("tempPage")!=null) {
 <title>레시피공유-레공</title>
 
 <!-- Bootstrap core CSS -->
-<link href="/recipeteamPJ/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/recipeteamPJ/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> 
 <!-- Custom styles for this template -->
 <link href="/recipeteamPJ/css/shop-homepage.css" rel="stylesheet">
+
 <style>
 table, th, td {
 	border: 1px solid black;
@@ -60,28 +61,34 @@ table, th, td {
 table {
 	width: 100%;
 }
+table a {
+ color:orangered;
+}
+.my.page-link {
+	color:coral;
+}
+.my.pagination > .active > a, 
+.my.pagination > .active > span, 
+.my.pagination > .active > a:hover, 
+.my.pagination > .active > span:hover, 
+.my.pagination > .active > a:focus, 
+.my.pagination > .active > span:focus {
+  background: coral;
+  border-color: coral;
+}
 </style>
 </head>
 
-<body>
+<body style="padding-top: 0px; font-family: 'Noto Sans KR', sans-serif;">
   <!-- 상단 Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <jsp:include page="../header.jsp" />
-  </nav>
 
   <!-- 중앙 Page Content -->
-  <div class="container" id="center" style="height:1000px;">
+  <div class="container" id="center" style="height:1500px; padding-top:10px;">
     <div class="row"> <!-- 왼쪽(게시판)과 오른쪽(내용) 정렬 -->
 	
       <div class="col-lg-3"> <!-- 왼쪽 (게시판) -->
-        <h1 class="my-4">게시판</h1>
-        <div class="list-group">
-          <a href="recipeBoard.do" class="list-group-item">레시피 게시판</a>
-          <a href="../restaurant/list.jsp" class="list-group-item">맛집 게시판</a>
-          <a href="#" class="list-group-item">게시판3</a>
-          <a href="#" class="list-group-item">게시판4</a>
-          <a href="#" class="list-group-item">게시판5</a>
-        </div>
+        <jsp:include page="../board.jsp" />
       </div> <!-- /.col-lg-3 왼쪽(게시판) 끝-->
       
 	  <div class="col-lg-9" id ="center_right"> <!-- 오른쪽(내용) --> 
@@ -171,13 +178,14 @@ table {
 		<%} %>
 		<br>
 		
+		<!-- 페이지 --> 
 		<nav aria-label="Page navigation">
-		  <ul class="pagination justify-content-center">
+		  <ul class="pagination justify-content-center my">
 		      <% if (startPage == 1) {%>
 			      <li class="page-item disabled"><a class="page-link" href="#"
 			          tabindex="-1" aria-disabled="true">Previous</a></li>
 		      <% } else {%>
-			      <li class="page-item"><a class="page-link" href="javascript:goPage('<%=search_class%>','<%=search_word%>','<%=order%>','<%=startPage - 1%>')"
+			      <li class="page-item"><a class="page-link my" href="javascript:goPage('<%=search_class%>','<%=search_word%>','<%=order%>','<%=startPage - 1%>')"
 			          tabindex="-1"
 			          aria-disabled="true">Previous</a></li>
 		      <% }%>
@@ -190,7 +198,7 @@ table {
 					  </li>
 			      <%} else { %>
 				      <li class="page-item">
-					      <a class="page-link" href="javascript:goPage('<%=search_class%>','<%=search_word%>','<%=order%>','<%=i%>')"
+					      <a class="page-link my" href="javascript:goPage('<%=search_class%>','<%=search_word%>','<%=order%>','<%=i%>')"
 					      ><%=i%></a>
 					  </li>
 			      <%} 
@@ -203,7 +211,7 @@ table {
 		      	<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
 		      <% } else {%>
 			  	<li class="page-item">
-			    	<a class="page-link" 
+			    	<a class="page-link my" 
 			    	href="javascript:goPage('<%=search_class%>','<%=search_word%>','<%=order%>','<%=endPage + 1%>')">Next</a>
 			    </li>
 		      <% }%>

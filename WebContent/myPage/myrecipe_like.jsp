@@ -51,31 +51,34 @@ if (request.getAttribute("tempPage")!=null) {
 	table {
 		width: 100%;
 	}
-	label{
-	font-size: 30px;
+	table a {
+	 color:orangered;
+	}
+	.my.page-link {
+		color:coral;
+	}
+	.my.pagination > .active > a, 
+	.my.pagination > .active > span, 
+	.my.pagination > .active > a:hover, 
+	.my.pagination > .active > span:hover, 
+	.my.pagination > .active > a:focus, 
+	.my.pagination > .active > span:focus {
+	  background: coral;
+	  border-color: coral;
 	}
   </style>
 </head>
 
-<body>
+<body style="padding-top: 0px;">
   <!-- 상단 Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <jsp:include page="../header.jsp" />
-  </nav>
 
   <!-- 중앙 Page Content -->
-  <div class="container" id="center" style="height:1200px">
+  <div class="container" id="center" style="height:1500px; padding-top:10px;">
     <div class="row"> <!-- 왼쪽(게시판)과 오른쪽(내용) 정렬 -->
 	
       <div class="col-lg-3"> <!-- 왼쪽 (게시판) -->
-        <h1 class="my-4">게시판</h1>
-        <div class="list-group">
-          <a href="myPage.jsp" class="list-group-item">회원정보 수정</a>
-          <a href="myRecipeList.do?writer_id=<%=userId%>" class="list-group-item">내가 쓴 레시피</a>
-          <a href="myRes.jsp" class="list-group-item">내가 쓴 맛집</a>
-          <a href="myRecipeLike.do?like_id=<%=userId%>" class="list-group-item">좋아요한 레시피</a>
-          <a href="myResLike.jsp" class="list-group-item">좋아요한 맛집</a>
-        </div>
+         <jsp:include page="../board.jsp" />
       </div> <!-- /.col-lg-3 왼쪽(게시판) 끝-->
       
 	  <div class="col-lg-9" id ="center_right"> <!-- 오른쪽(내용) --> 
@@ -145,12 +148,12 @@ if (request.getAttribute("tempPage")!=null) {
 		</table>
 		
 		<nav aria-label="Page navigation">
-		  <ul class="pagination justify-content-center">
+		  <ul class="pagination justify-content-center my">
 		      <% if (startPage == 1) {%>
 			      <li class="page-item disabled"><a class="page-link" href="#"
 			          tabindex="-1" aria-disabled="true">Previous</a></li>
 		      <% } else {%>
-			      <li class="page-item"><a class="page-link" href="javascript:goPage('<%=userId%>','<%=order%>','<%=startPage - 1%>')"
+			      <li class="page-item"><a class="page-link my" href="javascript:goPage('<%=userId%>','<%=order%>','<%=startPage - 1%>')"
 			          tabindex="-1"
 			          aria-disabled="true">Previous</a></li>
 		      <% }%>
@@ -163,7 +166,7 @@ if (request.getAttribute("tempPage")!=null) {
 					  </li>
 			      <%} else { %>
 				      <li class="page-item">
-					      <a class="page-link" href="javascript:goPage('<%=userId%>','<%=order%>','<%=i%>')"
+					      <a class="page-link my" href="javascript:goPage('<%=userId%>','<%=order%>','<%=i%>')"
 					      ><%=i%></a>
 					  </li>
 			      <%} 
@@ -176,7 +179,7 @@ if (request.getAttribute("tempPage")!=null) {
 		      	<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
 		      <% } else {%>
 			  	<li class="page-item">
-			    	<a class="page-link" 
+			    	<a class="page-link my" 
 			    	href="javascript:goPage('<%=userId%>','<%=order%>','<%=endPage + 1%>')">Next</a>
 			    </li>
 		      <% }%>
