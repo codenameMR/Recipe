@@ -464,7 +464,9 @@ public class RecipeDAO {
 	
 	public int getCountRows(List<Recipe> lst) {
 		 int count = 0;
+		 if(lst != null) {
 		 count = lst.size();
+		 }
 		 return count;
 	}
 	

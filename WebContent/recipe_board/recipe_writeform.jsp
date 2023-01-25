@@ -63,7 +63,7 @@ String[] rec_categories = {"한식","중식","일식","양식","기타"};
     <div class="row"> <!-- 왼쪽(게시판)과 오른쪽(내용) 정렬 -->
 	
       <div class="col-lg-3"> <!-- 왼쪽 (게시판) -->
-        <jsp:iclude page="../board.jsp"/>
+        <jsp:include page="../board.jsp"/>
       </div> <!-- /.col-lg-3 왼쪽(게시판) 끝-->
       
 	  <div class="col-lg-9" id ="center_right"> <!-- 오른쪽(내용) --> 

@@ -70,7 +70,7 @@ padding-left:400px;
 			if(session.getAttribute("userId")==null){ 
 		  %>
           <li class="nav-item">
-            <a class="nav-link barFont" href="/recipeteamPJ/signUpNInForm.jsp" />로그인/회원가입</a>
+            <a class="nav-link barFont" href="/recipeteamPJ/signUpNInForm.jsp" >로그인/회원가입</a>
           </li>
           
           <%

@@ -42,11 +42,12 @@ String[] memberInfo = dao.memberMyPage(mi);
 	  	<div style="height:20px"></div>
 	  	<h1>회원정보 수정</h1>
 	  	<hr>
-	  	<form action="changePW.jsp" id="updatePWForm">
+	  	<form id="updatePWForm">
 		  <label>이름 :&nbsp;</label><label id="id"><%=memberInfo[2] %></label><br>
 		  <label>아이디 :&nbsp;</label><label id="name"><%=memberInfo[0] %></label><br>
-		  <label>비밀번호 :&nbsp;</label><input id="password" name="password" placeholder="*******"required>
-		  <input type="button" id="changepw" value="비밀번호 변경">
+		  <label>비밀번호 :&nbsp;</label><input type="password" id="password" name="password" placeholder="*******"required>
+		  <input type="button" id="changepw" value="비밀번호 변경"><hr>
+		  <input type="button" id="withdrawal" value="회원탈퇴">
 		  <div id="statement">
 		  </div>
   		</form>
@@ -71,9 +72,24 @@ String[] memberInfo = dao.memberMyPage(mi);
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
+  $('#withdrawal').click(function() {
+	  if(window.confirm("정말 회원을 탈퇴하시겠습니까?")){
+		$.ajax({
+			url : '/recipeteamPJ/myPage/withdrawal.jsp',
+			type : 'get',
+			data: $("#updatePWForm").serialize(),
+			success : function(val) {
+				$('#statement').html(val);
+			}
+		});
+	  }
+	});
+  
+  
+  
   $('#changepw').click(function() {
 		$.ajax({
-			url : '/recipeteamPJ/changePW.jsp',
+			url : '/recipeteamPJ/myPage/changePW.jsp',
 			type : 'get',
 			data: $("#updatePWForm").serialize(),
 			success : function(val) {

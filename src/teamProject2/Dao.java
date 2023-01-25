@@ -157,6 +157,20 @@ public class Dao {
 			e.printStackTrace();
 		}
 		return 0;
-		
+	}
+	
+	public int withdrawal(String userId) {
+		String sql = "DELETE FROM MEMBER_INFO WHERE USER_ID = ?";
+		int result = 0;
+		try {
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			psmt.setString(1, userId);
+			result = psmt.executeUpdate();
+			return result;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 }
