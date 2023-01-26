@@ -183,12 +183,7 @@ if (recipe == null ) {
   <!-- /.container 중앙 끝 -->
 	
   <!-- Footer 하단-->
-  <footer class="py-5 bg-dark">
-    <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
-    </div>
-    <!-- /.container 하단 끝 -->
-  </footer>
+  <jsp:include page="../footer.jsp" />
 
   <!-- Bootstrap core JavaScript -->
   <script src="/recipeteamPJ/vendor/jquery/jquery.min.js"></script>

@@ -85,7 +85,7 @@ if (recipe == null ) {
 	</style>
 </head>
 
-<body style="padding-top: 0px;">
+<body style="padding-top: 0px; font-family: 'Noto Sans KR', sans-serif;">
   <!-- 상단 Navigation -->
   <jsp:include page="../header.jsp" />
 
@@ -187,12 +187,7 @@ if (recipe == null ) {
   <!-- /.container 중앙 끝 -->
 	
   <!-- Footer 하단-->
-  <footer class="py-5 bg-dark">
-    <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
-    </div>
-    <!-- /.container 하단 끝 -->
-  </footer>
+  <jsp:include page="../footer.jsp" />
 
   <!-- Bootstrap core JavaScript -->
   <script src="/recipeteamPJ/vendor/jquery/jquery.min.js"></script>

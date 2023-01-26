@@ -193,6 +193,9 @@ if (request.getAttribute("tempPage")!=null) {
        
   </div>
   <!-- /.container 중앙 끝 -->
+  
+  <!-- Footer 하단-->
+  <jsp:include page="../footer.jsp" />
 
   <!-- Bootstrap core JavaScript -->
   <script src="/recipeteamPJ/vendor/jquery/jquery.min.js"></script>
