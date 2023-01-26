@@ -30,24 +30,26 @@ public class UpdateCommand implements Command{
 		String rec_pic2 = multi.getFilesystemName("rec_pic2");
 		String rec_pic3 = multi.getFilesystemName("rec_pic3");
 		
+			
 		// D:/rec_storage에서 이미지 파일 삭제
 		File rec_file1;
 		File rec_file2;
 		File rec_file3;
 		Recipe deletePic = RecipeDAO.getInstance().selectRecipe(rec_num);
-		if (rec_pic1 == null && deletePic.getRec_pic1()!=null) {
+		if (deletePic.getRec_pic1()!=null) {
 			rec_file1 = new File(deletePic.getRec_pic1());
 			rec_file1.delete();
 		}
-		if (rec_pic2 == null && deletePic.getRec_pic2()!=null) {
+		if (deletePic.getRec_pic2()!=null) {
 			rec_file2 = new File(deletePic.getRec_pic2());
 			rec_file2.delete();
 		}
-		if (rec_pic3 == null && deletePic.getRec_pic3()!=null) {
+		if (deletePic.getRec_pic3()!=null) {
 			rec_file3 = new File(deletePic.getRec_pic3());
 			rec_file3.delete();
 		}
 		
+		Recipe recipe = new Recipe();
 		// 업로드한 파일의 전체 경로를 DB에 저장하기 위함
 		String fileFullPath_rec_pic1 = "";
 		String fileFullPath_rec_pic2 = "";
@@ -58,8 +60,7 @@ public class UpdateCommand implements Command{
 		 fileFullPath_rec_pic2 = savePath + "/" + rec_pic2;
 		if (rec_pic3 != null)
 		fileFullPath_rec_pic3 = savePath + "/" + rec_pic3;
-	   
-		Recipe recipe = new Recipe();
+		
 		recipe.setRec_num(rec_num);
 		recipe.setRec_title(rec_title);
 		recipe.setRec_content(rec_content);

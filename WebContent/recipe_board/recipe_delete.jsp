@@ -7,6 +7,9 @@
 	if (request.getAttribute("prePage")!=null) {
 	prePage = (String)request.getAttribute("prePage");
 	}
+	System.out.println(prePage);
+	
+	String userId = (String)session.getAttribute("userId");
 %>
 <% if (result == 0) { %>
 	<script>
@@ -22,12 +25,12 @@
 	<%} else if(prePage.equals("mylike")){ %>
 		<script>
 			alert("레시피 삭제 성공");
-	 		location.href = "myRecipeList.do?prePage=mylike";
+	 		location.href = "myRecipeLike.do?like_id=<%=userId%>";
 		</script>
 	<% } else if(prePage.equals("myrecipe")) {%>
 		<script>
 			alert("레시피 삭제 성공");
-	 		location.href = "myRecipeList.do?prePage=myrecipe";
+	 		location.href = "myRecipeList.do?writer_id=<%=userId%>";
 		</script>
 	<% } 
  } %>

@@ -44,7 +44,6 @@ public class RecipeController extends HttpServlet {
 		//conPath 부분은 /Book이 될 것이고,
 		//com 부분은 /example.do
 		
-		
 		switch (com) {
 		//레시피게시판, 목록으로 클릭 시 (1페이지로)
 		case "/recipeBoard.do":

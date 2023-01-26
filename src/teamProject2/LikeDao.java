@@ -256,7 +256,7 @@ public class LikeDao {
 			PreparedStatement pstmt = null; 
 			ResultSet rs = null;
 			try {
-				pstmt = conn.prepareStatement("select * from recipe_board where rec_num in (select rec_num from REC_LIKED where user_id=?)");
+				pstmt = conn.prepareStatement("select * from recipe_board where rec_num in (select rec_num from REC_LIKED where user_id=?) order by rec_num desc");
 				pstmt.setString(1, userId); 
 				rs = pstmt.executeQuery();
 				while (rs.next()) {
@@ -274,8 +274,7 @@ public class LikeDao {
 					Recipe recipe = new Recipe(rec_num, user_id, rec_title, rec_content, rec_date, rec_views, rec_likes, rec_category, rec_pic1, rec_pic2, rec_pic3);
 					searchedLst.add(recipe);
 				}
-					recLst = searchedLst;
-				return recLst;
+				return searchedLst;
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {

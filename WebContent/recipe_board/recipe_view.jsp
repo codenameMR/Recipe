@@ -62,11 +62,13 @@ if (recipe == null ) {
   <link href="/recipeteamPJ/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom styles for this template -->
   <link href="/recipeteamPJ/css/shop-homepage.css" rel="stylesheet">
-  
+  <!--  [이미지 모달창 참조 ] https://lokeshdhakar.com/projects/lightbox2/#examples -->
+  <link href="/recipeteamPJ/css/lightbox.css" rel="stylesheet" />
 	<style>
 	.imgView img {
 		width: 100px;
 		height: 100px;
+		object-fit: cover;
 	}
 	#btn {
 		border:none;
@@ -83,7 +85,7 @@ if (recipe == null ) {
 	</style>
 </head>
 
-<body style="padding-top: 0px;" >
+<body style="padding-top: 0px;">
   <!-- 상단 Navigation -->
   <jsp:include page="../header.jsp" />
 
@@ -107,15 +109,20 @@ if (recipe == null ) {
 			<div style="height: 15px"></div>
 			<div class=imgView>
 				<% if (rec_pic1 != "") { %>
-				<img src="/recipeteamPJ/rec_pic/<%=rec_pic1%>"
-					alt="게시글 <%=rec_num%>의 picture1">
+				<a href="/recipeteamPJ/rec_pic/<%=rec_pic1%>" data-lightbox="rec_pic">
+				<img src="/recipeteamPJ/rec_pic/<%=rec_pic1%>" alt="게시글 <%=rec_num%>의 picture1" >
+				</a>
 				<% } if (rec_pic2 != "") { %>
+				<a href="/recipeteamPJ/rec_pic/<%=rec_pic2%>" data-lightbox="rec_pic" >
 				<img src="/recipeteamPJ/rec_pic/<%=rec_pic2%>"
-					alt="게시글 <%=rec_num%>의 picture2">
+					alt="게시글 <%=rec_num%>의 picture2"  >
+				</a>
 				<% } if (rec_pic3 != "") { %>
+				<a href="/recipeteamPJ/rec_pic/<%=rec_pic3%>" data-lightbox="rec_pic" >
 				<img src="/recipeteamPJ/rec_pic/<%=rec_pic3%>"
-					alt="게시글  <%=rec_num%>의 picture3">
+					alt="게시글  <%=rec_num%>의 picture3"  >
 				<% } %>
+				</a>
 			</div>
 
 			<hr>
@@ -190,9 +197,10 @@ if (recipe == null ) {
   <!-- Bootstrap core JavaScript -->
   <script src="/recipeteamPJ/vendor/jquery/jquery.min.js"></script>
   <script src="/recipeteamPJ/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/recipeteamPJ/js/lightbox.js"></script>
+  <script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>  
 </body>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 	<script type="text/javascript">
 		function signin() {
 			alert("로그인이 필요한 기능입니다");
@@ -201,7 +209,7 @@ if (recipe == null ) {
 	    function chkDelete(rec_num) {
 	    	let ok = confirm("해당 글을 삭제하시겠습니까?");
 	        if (ok) {
-	        	location.href = "recipeDeleteOk.do?rec_num=" + rec_num;
+	        	location.href = "recipeDelete.do?rec_num=" + rec_num;
 	        }
 	    }
 		

@@ -64,11 +64,12 @@ if (recipe == null ) {
   <link href="/recipeteamPJ/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom styles for this template -->
   <link href="/recipeteamPJ/css/shop-homepage.css" rel="stylesheet">
-  
+  <link href="/recipeteamPJ/css/lightbox.css" rel="stylesheet" />
 	<style>
 	.imgView img {
 		width: 100px;
 		height: 100px;
+		object-fit: cover;
 	}
 	#btn {
 		border:none;
@@ -85,7 +86,7 @@ if (recipe == null ) {
 	</style>
 </head>
 
-<body>
+<body style="padding-top: 0px;">
   <!-- 상단 Navigation -->
   <jsp:include page="../header.jsp" />
 
@@ -109,13 +110,13 @@ if (recipe == null ) {
 			<div style="height: 15px"></div>
 			<div class=imgView>
 				<% if (rec_pic1 != "") { %>
-				<img src="/recipeteamPJ/rec_pic/<%=rec_pic1%>"
+				<img src="/recipeteamPJ/rec_pic/<%=rec_pic1%>" data-lightbox="rec_pic"
 					alt="게시글 <%=rec_num%>의 picture1">
 				<% } if (rec_pic2 != "") { %>
-				<img src="/recipeteamPJ/rec_pic/<%=rec_pic2%>"
+				<img src="/recipeteamPJ/rec_pic/<%=rec_pic2%>" data-lightbox="rec_pic"
 					alt="게시글 <%=rec_num%>의 picture2">
 				<% } if (rec_pic3 != "") { %>
-				<img src="/recipeteamPJ/rec_pic/<%=rec_pic3%>"
+				<img src="/recipeteamPJ/rec_pic/<%=rec_pic3%>" data-lightbox="rec_pic"
 					alt="게시글  <%=rec_num%>의 picture3">
 				<% } %>
 			</div>
@@ -165,7 +166,7 @@ if (recipe == null ) {
 					<button type="button" onclick="chkDelete(<%=rec_num%>)" style="display: inline">삭제하기</button>
 			<%		} else { %>
 					<button type="button" onclick="location.href='recipeUpdate.do?rec_num=<%=rec_num%>&prePage=myrecipe'">수정하기</button>
-					<button type="button" onclick="location.href='recipeDelete.do?rec_num=<%=rec_num%>&prePage=myrecipe'" style="display: inline">삭제하기</button>
+					<button type="button" onclick="chkDelete2(<%=rec_num%>)" style="display: inline">삭제하기</button>
 			<%		} 
 			   } else {
 			%>
@@ -192,6 +193,7 @@ if (recipe == null ) {
   <!-- Bootstrap core JavaScript -->
   <script src="/recipeteamPJ/vendor/jquery/jquery.min.js"></script>
   <script src="/recipeteamPJ/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/recipeteamPJ/js/lightbox.js"></script>
 </body>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -203,26 +205,33 @@ if (recipe == null ) {
         }
     }
 	
-		function like() {
-			let likeData = $("#likeform").serialize();
-			$('#likeNum').empty();
-				$.ajax({
-					url : '/recipeteamPJ/recipe_board/rec_like.jsp',
-					type : 'POST',
-					data : likeData,
-					success : function(data) {
-						console.log(data);
-						$('#likeBtn').empty();
-						$('#likeBtn').html(`<form id=cancelLikeform>
-								<input type="hidden" name="rec_num" value="<%=rec_num%>">
-							<button type="button"id="btn" onClick="cancelLike()">
-			   	 			<img id="heart" src="https://cdn-icons-png.flaticon.com/512/803/803087.png" alt="좋아요">
-				   	 		</button>
-							</form>`);
-						$('#likeNum').html(data);
-						
-					}
-				});
+    function chkDelete2(rec_num) {
+    	let ok = confirm("해당 글을 삭제하시겠습니까?");
+        if (ok) {
+        	location.href= "recipeDelete.do?rec_num="+rec_num+"&prePage=myrecipe"
+        }
+    }
+    
+    function like() {
+		let likeData = $("#likeform").serialize();
+		$('#likeNum').empty();
+			$.ajax({
+				url : '/recipeteamPJ/recipe_board/rec_like.jsp',
+				type : 'POST',
+				data : likeData,
+				success : function(data) {
+					console.log(data);
+					$('#likeBtn').empty();
+					$('#likeBtn').html(`<form id=cancelLikeform>
+							<input type="hidden" name="rec_num" value="<%=rec_num%>">
+						<button type="button"id="btn" onClick="cancelLike()">
+		   	 			<img id="heart" src="https://cdn-icons-png.flaticon.com/512/803/803087.png" alt="좋아요">
+			   	 		</button>
+						</form>`);
+					$('#likeNum').html(data);
+					
+				}
+			});
 			}
 		
 		function cancelLike() {

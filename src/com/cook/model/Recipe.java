@@ -120,10 +120,12 @@ public class Recipe {
 			}
 			@Override
 			public String toString() {
-				return "RecipeBoard [rec_num=" + rec_num + ", user_id=" + user_id + ", rec_title=" + rec_title
+				return "Recipe [rec_num=" + rec_num + ", user_id=" + user_id + ", rec_title=" + rec_title
 						+ ", rec_content=" + rec_content + ", rec_date=" + rec_date + ", rec_views=" + rec_views
-						+ ", rec_likes=" + rec_likes + ", rec_category=" + rec_category + "]";
+						+ ", rec_likes=" + rec_likes + ", rec_category=" + rec_category + ", rec_pic1=" + rec_pic1
+						+ ", rec_pic2=" + rec_pic2 + ", rec_pic3=" + rec_pic3 + "]";
 			}
+			
 			
 			
 		
