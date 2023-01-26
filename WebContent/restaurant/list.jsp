@@ -1,62 +1,64 @@
-<%@page import="restaurant.Restaurant"%>
-<%@page import="java.util.List"%>
-<%@page import="restaurant.ResDAO"%>
+<%@page import="teamProject2.LikeDao"%>
+<%@page import="com.cook.model.RecipeDAO"%>
+<%@page import="teamProject2.RecLike"%>
+<%@page import="com.cook.model.Recipe"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*" %>
+	pageEncoding="UTF-8" session="false"%>
 <%
-	List<Restaurant> res_list = ResDAO.getInstance().selectAll();
-	String user_id=(String)session.getAttribute("userId");
+request.setCharacterEncoding("utf-8");
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
- <head>
- <title>게시판</title>
- </head>
- <body>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>레시피공유</title>
+	
+  <!-- Bootstrap core CSS -->
+  <link href="/recipeteamPJ/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="/recipeteamPJ/css/shop-homepage.css" rel="stylesheet">
+  <!-- 구글 폰트 --> 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
+</head>
 
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr height="5"><td width="5"></td></tr>
- <tr style="background:url('img/table_mid.gif') repeat-x; text-align:center;">
-   <td width="5"><img src="img/table_left.gif" width="5" height="30" /></td>
-   <td width="73">번호</td>
-   <td width="73">제목</td>
-   <td width="73">작성자</td>
-   <td width="73">조회수</td>
-   <td width="73">좋아요수</td>
-   <td width="73">작성일</td>
-  </tr>
-<% if(res_list !=null){
-	  for(Restaurant restaurant : res_list){
-	  	%>
-<tr height="25" align="center">
-	<td>&nbsp;</td>
-	<td><%=restaurant.getRes_num() %></td>
-	<td align="left"><a href="view.jsp?res_num=<%=restaurant.getRes_num()%>"><%=restaurant.getTitle() %></td>
-	<td align="center"><%=restaurant.getUser_id() %></td>
-	<td align="center"><%=restaurant.getViews() %></td>
-	<td align="center"><%=restaurant.getLikes() %></td>
-	<td align="center"><%=restaurant.getDate() %></td>
-	<td>&nbsp;</td>
-</tr>
-<% }
-	  }%>
-  <tr height="1" bgcolor="#D2D2D2"><td colspan="6"></td></tr>
+<body style="padding-top: 0px; font-family: 'Noto Sans KR', sans-serif;">
+  <!-- 상단 Navigation -->
+  <jsp:include page="../header.jsp" />
 
- </table>
- 
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr><td colspan="4" height="5"></td></tr>
-  <tr align="center">
-  <% if(user_id !=null){
-	 %>
-  
-   <td><input type=button value="글쓰기" OnClick="window.location='write.jsp'"></td>
-  
-  <% 	
-	}
-	%>
-	</tr>
-</table>
-</body> 
+  <!-- 중앙 Page Content -->
+  <div class="container" id="center" style="height:1500px; padding-top:20px;">
+    <div class="row"> <!-- 왼쪽(게시판)과 오른쪽(내용) 정렬 -->
+	
+      <div class="col-lg-3"> <!-- 왼쪽 (게시판) -->
+      	<jsp:include page="../board.jsp" />
+      </div> <!-- /.col-lg-3 왼쪽(게시판) 끝-->
+      
+	  <div class="col-lg-9" id ="center_right"> <!-- 오른쪽(내용) --> 
+	  </div> <!--/.col-lg-9 오른쪽(내용) 끝--> 	
+       
+      </div> <!-- /.row 왼쪽,오른쪽 정렬 끝--> 
+       
+  </div>
+  <!-- /.container 중앙 끝 -->
+	
+  <!-- Footer 하단--> 
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+    </div>
+  </footer>
+	
+  <!-- Bootstrap core JavaScript -->
+  <script src="/recipeteamPJ/vendor/jquery/jquery.min.js"></script>
+  <script src="/recipeteamPJ/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	</script>
 </html>
